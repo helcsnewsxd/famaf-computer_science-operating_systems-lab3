@@ -60,6 +60,52 @@ scheduler(void)
 
 ### ¿Cuánto dura un quantum en xv6?
 
+Dado el funcionamiento de las interrupciones en XV6, podemos notar que los *timer interrupts* son habilitados en [start.c](/kernel/start.c) donde la función que nos interesa para responder la pregunta es `timerinit`.
+
+```c
+// arrange to receive timer interrupts.
+// they will arrive in machine mode at
+// at timervec in kernelvec.S,
+// which turns them into software interrupts for
+// devintr() in trap.c.
+void
+timerinit()
+{
+  // each CPU has a separate source of timer interrupts.
+  int id = r_mhartid();
+
+  // ask the CLINT for a timer interrupt.
+  int interval = 1000000; // cycles; about 1/10th second in qemu.
+  *(uint64*)CLINT_MTIMECMP(id) = *(uint64*)CLINT_MTIME + interval;
+
+  // prepare information in scratch[] for timervec.
+  // scratch[0..2] : space for timervec to save registers.
+  // scratch[3] : address of CLINT MTIMECMP register.
+  // scratch[4] : desired interval (in cycles) between timer interrupts.
+  uint64 *scratch = &timer_scratch[id][0];
+  scratch[3] = CLINT_MTIMECMP(id);
+  scratch[4] = interval;
+  w_mscratch((uint64)scratch);
+
+  // set the machine-mode trap handler.
+  w_mtvec((uint64)timervec);
+
+  // enable machine-mode interrupts.
+  w_mstatus(r_mstatus() | MSTATUS_MIE);
+
+  // enable machine-mode timer interrupts.
+  w_mie(r_mie() | MIE_MTIE);
+}
+```
+
+la cual se encarga de inicializar el timer. En este caso, puede visualizarse cómo setea el quantum en la "comunicación" con el CLINT hardware (core-local interruptor) siendo:
+```c
+int interval = 1000000; // cycles; about 1/10th second in qemu.
+```
+lo que equivale aproximadamente a 0.1 segundos en qemu (como se especifica en el comentario).
+
+De igual modo, cabe aclarar, el quantum es de 1000000 clocks ya que el tiempo "real" depende del procesador y la velocidad en la que se hacen los ciclos.
+
 ### ¿Cuánto dura un cambio de contexto en xv6?
 
 ### ¿El cambio de contexto consume tiempo de un quantum?
