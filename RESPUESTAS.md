@@ -11,7 +11,7 @@ Esto se realiza de forma repetida hasta que todos los procesos son terminados.
 
 Respecto a la implementación en este SO, puede observarse en [proc.c](/kernel/proc.c) que la estructura de datos es, simplemente, un array estático de 64 elementos (`proc[NPROC]`) de tipo `struct proc`, el cual es la tabla de procesos.
 
-En el scheduler, para simular una queue se usa como un arreglo circular (después del final va el principio), de modo que cuando se encuentra con un proceso en estado *RUNNABLE*, se lo asigna a la CPU y hace el cambio de contexto (context switch) pasando de kernel a user con `swtch` con el proceso actual. Se vuelve al scheduler cuando se haya acabado el quantum mediante una interrupción, de modo que se "desligue" el CPU y se itere por el siguiente en la lista.
+En el scheduler, para simular una queue se usa como un arreglo circular (después del final va el principio), de modo que cuando se encuentra con un proceso en estado *RUNNABLE*, se lo asigna a la CPU y hace el cambio de contexto (context switch) pasando de kernel a user con `swtch` con el proceso actual. Se vuelve al scheduler cuando se haya acabado el quantum mediante una interrupción (la cual es tratada por la función `yield`), de modo que se "desligue" el CPU y se itere por el siguiente en la lista.
 
 Viendo esto, es importante destacar que el quantum no es asginado a los procesos en particular, sino que se ejecuta siempre de modo que si alguno termina antes del límite de tiempo, sigue el elegido a continuación con la cantidad de ticks de reloj ya transcurridos (i.e., con el mismo quantum y tiempo transcurrido).
 
@@ -106,8 +106,31 @@ lo que equivale aproximadamente a 0.1 segundos en qemu (como se especifica en el
 
 De igual modo, cabe aclarar, el quantum es de 1000000 clocks ya que el tiempo "real" depende del procesador y la velocidad en la que se hacen los ciclos.
 
-### ¿Cuánto dura un cambio de contexto en xv6?
+### ¿Cuánto dura un cambio de contexto en xv6? ¿El cambio de contexto consume tiempo de un quantum?
 
-### ¿El cambio de contexto consume tiempo de un quantum?
+Como se ha hablado anteriormente, el cambio de contexto se realiza en [swtch.S](/kernel/swtch.S) bajo la función del mismo nombre, donde simplemente se guardan los registros del *old context* (el del proceso que dejó la CPU) y se cargan los del *new context*.
+Como puede visualizarse en la siguiente imagen, el hacer el context switch durante la ejecución del cpubench tarda simplemente 1 tick de reloj (y a veces 0):
+![](/Imagenes/Ticks%20de%20reloj%20del%20context%20switch.png)
+
+Esto se ha obtenido modificando levemente el scheduler en la parte en la que se hace el switcheo:
+```c
+uint inixticks; // ticks anteriores al switch
+acquire(&tickslock);
+inixticks = ticks;
+release(&tickslock);
+
+swtch(&c->context, &p->context);
+
+uint finxticks; // ticks posteriores al switch
+acquire(&tickslock);
+finxticks = ticks;
+release(&tickslock);
+
+printf("ACTUAL TICK DE RELOJ:\n   Ini --> %d\n   Fin --> %d\n   Diff --> %d\n-------------------\n",inixticks,finxticks,finxticks-inixticks);
+```
+
+Finalmente, y respondiendo a la segunda pregunta, el cambio de contexto sí consume tiempo de un quantum ya que este es asignado como interrupción de forma global al SO y no a un proceso en particular (como se mencionó anteriormente).
 
 ### ¿Hay alguna forma de que a un proceso se le asigne menos tiempo?
+
+Tal y como se mostró en las respuestas a las preguntas anteriores, más específicamente a la primera, el quantum es asignado mediante un timer interrupt al SO de forma global, no de forma particular a cada proceso. Motivo de esto, puede suceder que un proceso termine antes de la finalización del quantum, por lo que el siguiente elegido por el scheduler va a tener un tiempo menor asignado (el faltante) ya que comienza con el tiempo ya transcurrido.
