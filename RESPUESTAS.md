@@ -6,8 +6,8 @@
 
 XV6 usa [**Round Robin**](https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf) (RR) como política de planificación para elegir el próximo proceso a ejecutarse. Este scheduling funciona como se describe a continuación.
 
-    Se establece una run queue de procesos del mismo modo que la FIFO. Sin embargo, en vez de ejecutar un proceso hasta que finalice, lo ejecuta como máximo por un período de tiempo (*time slice*) conocido comúnmente como **quantum**. Una vez que al proceso actual se le haya acabado el quantum, este pasa a estar al final de la queue (en caso que no esté completo aún) y se switchea al siguiente en la cola.
-    Esto se realiza de forma repetida hasta que todos los procesos son terminados.
+Se establece una run queue de procesos del mismo modo que la FIFO. Sin embargo, en vez de ejecutar un proceso hasta que finalice, lo ejecuta como máximo por un período de tiempo (*time slice*) conocido comúnmente como **quantum**. Una vez que al proceso actual se le haya acabado el quantum, este pasa a estar al final de la queue (en caso que no esté completo aún) y se switchea al siguiente en la cola.
+Esto se realiza de forma repetida hasta que todos los procesos son terminados.
 
 Por ello mismo, puede observarse en este SO (más específicamente en [proc.c](/kernel/proc.c)) que la estructura de datos es, simplemente, un array estático de 64 elementos (`proc[NPROC]`) en el cual cada proceso tiene la siguiente estructura:
 ```c
