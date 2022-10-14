@@ -7,7 +7,7 @@ from typing import Union
 #   python run_experiments.py
 
 # Constants
-DURATION = 10
+DURATION = 5
 COMMANDS = [
     "iobench",
     "cpubench",
@@ -30,6 +30,10 @@ def skip_xv6_init_messages(stdout: FileIO) -> None:
         next(stdout)
 
 
+def clean_output(output):
+    return output.decode().replace("$ ", "").strip()
+
+
 def get_experiment_data(command: str, duration: Union[int, float]):
     """Executes command inside xv6 and keeps storing output for the specified duration
 
@@ -37,11 +41,7 @@ def get_experiment_data(command: str, duration: Union[int, float]):
     :duration: ammount of time in minutes
     """
 
-    result = {
-        "command": command,
-        "duration": duration,
-        "output": [],
-    }
+    result = {"command": command, "output": {}}
 
     qemu = Popen(XV6_CMD, stdout=PIPE, stdin=PIPE)
     skip_xv6_init_messages(qemu.stdout)
@@ -59,12 +59,26 @@ def get_experiment_data(command: str, duration: Union[int, float]):
         line = qemu.stdout.readline()
         if not line:
             break
-        output = line.decode().strip()
+        output = clean_output(line)
         print(output)
-        completion_percetage = (current_time - start_time) * 100 / duration_in_secs
+        time_passed = round(current_time - start_time, 2)
+        completion_percetage = time_passed * 100 / duration_in_secs
         print(f"Progress: {round(completion_percetage, 2)}%, ", end="")
-        result["output"].append(output)
+
         current_time = time.time()
+
+        pid = output.split(":")[0]
+
+        if "IOP" in output:
+            destination = result["output"].setdefault(f"iobench{pid}", [])
+
+        elif "KFLOP" in output:
+            destination = result["output"].setdefault(f"cpubench{pid}", [])
+
+        else:
+            continue
+
+        destination.append({"time": time_passed, "content": output})
 
     print("DONE")
     qemu.terminate()
