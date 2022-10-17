@@ -108,7 +108,7 @@ De igual modo, cabe aclarar, el quantum es de 1000000 clocks ya que el tiempo "r
 
 ### ¿Cuánto dura un cambio de contexto en xv6? ¿El cambio de contexto consume tiempo de un quantum?
 
-Como se ha hablado anteriormente, el cambio de contexto se realiza en [swtch.S](/kernel/swtch.S) bajo la función del mismo nombre, donde simplemente se guardan los registros del *old context* (el del proceso que dejó la CPU) y se cargan los del *new context*.
+Como se ha hablado anteriormente, el cambio de contexto se realiza en [swtch.S](/kernel/swtch.S) bajo la función del mismo nombre, donde simplemente se guardan los registros del *old context* (el del proceso que dejó la CPU) y se cargan los del *new context* (nuevo proceso que se carga en la CPU). La cantidad de instrucciones ejecutadas por el procesador (guardado y cargado del estado de los procesos) son 28.
 Como puede visualizarse en la siguiente imagen, el hacer el context switch durante la ejecución del cpubench e iobench de forma paralela (`cpubench &; iobench &`) tarda simplemente 1 tick de reloj (y a veces 0):
 ![](/Imagenes/Ticks%20de%20reloj%20del%20context%20switch.png)
 
