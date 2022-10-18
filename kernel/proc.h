@@ -84,6 +84,10 @@ enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 // Per-process state
 struct proc {
   struct spinlock lock;
+  
+  // needed for scheduling
+  uint64 priority;
+  uint64 popularity;
 
   // p->lock must be held when using these:
   enum procstate state;        // Process state
