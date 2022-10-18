@@ -6,6 +6,8 @@
 #include "proc.h"
 #include "defs.h"
 
+#define NPRIO 3
+
 struct cpu cpus[NCPU];
 
 struct proc proc[NPROC];
@@ -124,6 +126,7 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
+  p->priority = 1;
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
@@ -677,7 +680,7 @@ procdump(void)
       state = states[p->state];
     else
       state = "???";
-    printf("%d %s %s", p->pid, state, p->name);
+    printf("%d %s %s %d %d", p->pid, state, p->name, p->priority, p->popularity);
     printf("\n");
   }
 }
