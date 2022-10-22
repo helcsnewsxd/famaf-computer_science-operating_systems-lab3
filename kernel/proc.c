@@ -6,8 +6,6 @@
 #include "proc.h"
 #include "defs.h"
 
-#define NPRIO 3
-
 struct cpu cpus[NCPU];
 
 struct proc proc[NPROC];
@@ -126,7 +124,8 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
-  p->priority = 1;
+  p->priority = NPRIO-1;
+  p->popularity = 0;
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
@@ -462,6 +461,7 @@ scheduler(void)
         // to release its lock and then reacquire it
         // before jumping back to us.
         p->state = RUNNING;
+        p->popularity++;
         c->proc = p;
         swtch(&c->context, &p->context);
 
@@ -508,6 +508,11 @@ yield(void)
   struct proc *p = myproc();
   acquire(&p->lock);
   p->state = RUNNABLE;
+
+  // Scheduling --> Interrupt from timer
+  if(p->priority != 0)
+    p->priority--;
+
   sched();
   release(&p->lock);
 }
@@ -553,6 +558,10 @@ sleep(void *chan, struct spinlock *lk)
   // Go to sleep.
   p->chan = chan;
   p->state = SLEEPING;
+
+  // Scheduling --> Interrupt that wasn't timer
+  if(p->priority != NPRIO-1)
+    p->priority++;
 
   sched();
 
@@ -680,7 +689,7 @@ procdump(void)
       state = states[p->state];
     else
       state = "???";
-    printf("%d %s %s %d %d", p->pid, state, p->name, p->priority, p->popularity);
+    printf("%d %d %d %s %s", p->pid, p->priority, p->popularity, state, p->name);
     printf("\n");
   }
 }
