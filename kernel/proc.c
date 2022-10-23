@@ -35,8 +35,6 @@ enqueue(struct proc *p)
 
   if(proc.cnt == NPROC)
     panic("proc limit excedeed");
-  
-  // printf("ENQUEUE PART 0\nCnt --> %d\nMax prior --> %d\nIni --> %d\nSize --> %d\nAct prior --> %d\nProc name --> %s\n",proc.cnt,proc.maxprior,proc.ini[prior],proc.size[prior],prior,p->name);
 
   proc.queue[prior][index(ini+size)] = p;
   proc.cnt++;
@@ -45,8 +43,6 @@ enqueue(struct proc *p)
   if(prior > proc.maxprior)
     proc.maxprior = prior;
   
-  // printf("ENQUEUE PART 1\nCnt --> %d\nMax prior --> %d\nIni --> %d\nSize --> %d\nAct prior --> %d\nProc name --> %s\n",proc.cnt,proc.maxprior,proc.ini[prior],proc.size[prior],prior,proc.queue[prior][index(proc.ini[prior]+proc.size[prior]-1)]->name);
-  // printf("=============================================================\n");
   release(&proc.lock);
 }
 
@@ -69,8 +65,6 @@ struct proc
 
   acquire(&proc.queue[prior][index(ini)]->lock);
 
-  // printf("DEQUEUE PART 0\nCnt --> %d\nMax prior --> %d\nIni --> %d\nSize --> %d\nAct prior --> %d\nProc name --> %s\n",proc.cnt,proc.maxprior,proc.ini[prior],proc.size[prior],prior,proc.queue[prior][index(proc.ini[prior])]->name);
-
   struct proc *p = proc.queue[prior][index(ini)];
   proc.queue[prior][index(ini)] = 0;
   proc.cnt--;
@@ -81,9 +75,7 @@ struct proc
   for(uint i = 1; i < NPRIO; i++)
     if(proc.size[i] != 0)
       proc.maxprior = i;
-
-  // printf("DEQUEUE PART 1\nCnt --> %d\nMax prior --> %d\nIni --> %d\nSize --> %d\nAct prior --> %d\nProc name --> %s\n",proc.cnt,proc.maxprior,proc.ini[prior],proc.size[prior],prior,p->name);
-  // printf("=============================================================\n");
+  
   release(&proc.lock);
   return p;
 }
@@ -209,6 +201,7 @@ found:
   p->state = USED;
   p->priority = NPRIO-1;
   p->popularity = 0;
+  p->firstelection = 0;
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
@@ -521,7 +514,7 @@ wait(uint64 addr)
   }
 }
 
-uint all_interruption = 1;
+uint timerinterruption[NCPU];
 
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
@@ -535,6 +528,7 @@ scheduler(void)
 {
   struct proc *p;
   struct cpu *c = mycpu();
+  uint id = cpuid();
   
   c->proc = 0;
   for(;;){
@@ -546,8 +540,9 @@ scheduler(void)
       // to release its lock and then reacquire it
       // before jumping back to us.
       p->state = RUNNING;
-      p->popularity += all_interruption;
-      // all_interruption = 0;
+      p->popularity++;
+      p->firstelection += timerinterruption[id];
+      timerinterruption[id] = 0;
       c->proc = p;
       swtch(&c->context, &p->context);
 
@@ -600,7 +595,7 @@ yield(void)
   
   enqueue(p);
 
-  all_interruption = 1;
+  timerinterruption[cpuid()] = 1;
   sched();
   release(&p->lock);
 }
@@ -779,7 +774,7 @@ procdump(void)
       state = states[p->state];
     else
       state = "???";
-    printf("%d %d %d %s %s", p->pid, p->priority, p->popularity, state, p->name);
+    printf("%d %d %d %d %s %s", p->pid, p->priority, p->firstelection, p->popularity, state, p->name);
     printf("\n");
   }
 }
