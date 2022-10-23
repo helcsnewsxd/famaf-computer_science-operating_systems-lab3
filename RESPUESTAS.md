@@ -1,4 +1,4 @@
-# Segunda Parte: Mediciones
+# Segunda Parte: Cómo el planificador afecta a los procesos
 
 Info del script construído y detalles previos
 
