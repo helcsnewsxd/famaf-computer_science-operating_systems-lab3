@@ -8,7 +8,68 @@
 
 struct cpu cpus[NCPU];
 
-struct proc proc[NPROC];
+struct proctable
+{
+  uint cnt,maxprior;
+  struct proc list[NPROC];
+  struct proc *queue[NPRIO][NPROC];
+  uint ini[NPRIO],size[NPRIO];
+  struct spinlock lock;
+} proc;
+
+// Auxiliar queue functions
+uint
+index(uint pos)
+{
+  return (pos+NPROC)%NPROC;
+}
+
+void
+enqueue(struct proc *p)
+{
+  uint prior = p->priority;
+  uint ini = proc.ini[prior];
+  uint size = proc.size[prior];
+
+  if(proc.cnt == NPROC)
+    panic("proc limit excedeed");
+
+  proc.queue[prior][index(ini+size)] = p;
+  proc.cnt++;
+  proc.size[prior]++;
+
+  if(prior > proc.maxprior)
+    proc.maxprior = prior;
+}
+
+struct proc
+*deque()
+{
+  uint prior = proc.maxprior;
+  uint ini = proc.ini[prior];
+  uint size = proc.size[prior];
+
+  if(size == 0)
+    return 0;
+
+  if(proc.queue[prior][index(ini)] == 0)
+    panic("invalid dequeue");
+
+  acquire(&proc.queue[prior][index(ini)]->lock);
+
+  struct proc *p = proc.queue[prior][index(ini)];
+  proc.queue[prior][index(ini)] = 0;
+  proc.cnt--;
+  proc.ini[prior] = index(ini+1);
+  proc.size[prior]--;
+
+  proc.maxprior = 0;
+  for(uint i = 1; i < NPRIO; i++)
+    if(proc.size[i] != 0)
+      proc.maxprior = i;
+  
+  return p;
+}
 
 struct proc *initproc;
 
@@ -34,11 +95,11 @@ proc_mapstacks(pagetable_t kpgtbl)
 {
   struct proc *p;
   
-  for(p = proc; p < &proc[NPROC]; p++) {
+  for(p = proc.list; p < &proc.list[NPROC]; p++) {
     char *pa = kalloc();
     if(pa == 0)
       panic("kalloc");
-    uint64 va = KSTACK((int) (p - proc));
+    uint64 va = KSTACK((int) (p - proc.list));
     kvmmap(kpgtbl, va, (uint64)pa, PGSIZE, PTE_R | PTE_W);
   }
 }
@@ -51,11 +112,16 @@ procinit(void)
   
   initlock(&pid_lock, "nextpid");
   initlock(&wait_lock, "wait_lock");
-  for(p = proc; p < &proc[NPROC]; p++) {
+  initlock(&proc.lock, "proc_lock");
+  proc.cnt = proc.maxprior = 0;
+  for(p = proc.list; p < &proc.list[NPROC]; p++) {
       initlock(&p->lock, "proc");
       p->state = UNUSED;
-      p->kstack = KSTACK((int) (p - proc));
+      p->kstack = KSTACK((int) (p - proc.list));
   }
+  memset(proc.ini,0,sizeof(proc.ini));
+  memset(proc.size,0,sizeof(proc.size));
+  memset(proc.queue,0,sizeof(proc.queue));
 }
 
 // Must be called with interrupts disabled,
@@ -111,7 +177,7 @@ allocproc(void)
 {
   struct proc *p;
 
-  for(p = proc; p < &proc[NPROC]; p++) {
+  for(p = proc.list; p < &proc.list[NPROC]; p++) {
     acquire(&p->lock);
     if(p->state == UNUSED) {
       goto found;
@@ -124,6 +190,9 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
+  p->priority = NPRIO-1;
+  p->popularity = 0;
+  p->firstelection = 0;
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
@@ -250,6 +319,9 @@ userinit(void)
   p->cwd = namei("/");
 
   p->state = RUNNABLE;
+  acquire(&proc.lock);
+  enqueue(p);
+  release(&proc.lock);
 
   release(&p->lock);
 }
@@ -320,6 +392,9 @@ fork(void)
 
   acquire(&np->lock);
   np->state = RUNNABLE;
+  acquire(&proc.lock);
+  enqueue(np);
+  release(&proc.lock);
   release(&np->lock);
 
   return pid;
@@ -332,7 +407,7 @@ reparent(struct proc *p)
 {
   struct proc *pp;
 
-  for(pp = proc; pp < &proc[NPROC]; pp++){
+  for(pp = proc.list; pp < &proc.list[NPROC]; pp++){
     if(pp->parent == p){
       pp->parent = initproc;
       wakeup(initproc);
@@ -399,7 +474,7 @@ wait(uint64 addr)
   for(;;){
     // Scan through table looking for exited children.
     havekids = 0;
-    for(pp = proc; pp < &proc[NPROC]; pp++){
+    for(pp = proc.list; pp < &proc.list[NPROC]; pp++){
       if(pp->parent == p){
         // make sure the child isn't still in exit() or swtch().
         acquire(&pp->lock);
@@ -434,6 +509,28 @@ wait(uint64 addr)
   }
 }
 
+uint timerinterruption[NCPU];
+int antboost = 0;
+
+void
+priority_boost()
+{
+  struct proc *p;
+  
+  // Erase all process into the queue
+  while((p = deque()) != 0)
+    release(&p->lock);
+  
+  // Increment the priority for all process and insert into the queue
+  for(p = proc.list; p < &proc.list[NPROC]; p++){
+    if(p->state != UNUSED){
+      p->priority = NPRIO-1;
+      if(p->state == RUNNABLE)
+        enqueue(p);
+    }
+  }
+}
+
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
 // Scheduler never returns.  It loops, doing:
@@ -446,28 +543,39 @@ scheduler(void)
 {
   struct proc *p;
   struct cpu *c = mycpu();
+  uint id = cpuid();
   
   c->proc = 0;
   for(;;){
     // Avoid deadlock by ensuring that devices can interrupt.
     intr_on();
 
-    for(p = proc; p < &proc[NPROC]; p++) {
-      acquire(&p->lock);
-      if(p->state == RUNNABLE) {
-        // Switch to chosen process.  It is the process's job
-        // to release its lock and then reacquire it
-        // before jumping back to us.
-        p->state = RUNNING;
-        c->proc = p;
-        swtch(&c->context, &p->context);
+    acquire(&proc.lock);
 
-        // Process is done running for now.
-        // It should have changed its p->state before coming back.
-        c->proc = 0;
-      }
-      release(&p->lock);
+    // Priority boost
+    if(ticks % NBOOST == 0 && ticks != antboost){
+      antboost = ticks;
+      priority_boost();
     }
+    
+    if((p = deque()) != 0){
+      release(&proc.lock);
+      // Switch to chosen process.  It is the process's job
+      // to release its lock and then reacquire it
+      // before jumping back to us.
+      p->state = RUNNING;
+      p->popularity++;
+      p->firstelection += timerinterruption[id];
+      timerinterruption[id] = 0;
+      c->proc = p;
+      swtch(&c->context, &p->context);
+
+      // Process is done running for now.
+      // It should have changed its p->state before coming back.
+      c->proc = 0;
+      release(&p->lock);
+    }else release(&proc.lock);
+    
   }
 }
 
@@ -505,6 +613,16 @@ yield(void)
   struct proc *p = myproc();
   acquire(&p->lock);
   p->state = RUNNABLE;
+
+  // Scheduling --> Interrupt from timer
+  if(p->priority != 0)
+    p->priority--;
+  
+  acquire(&proc.lock);
+  enqueue(p);
+  release(&proc.lock);
+
+  timerinterruption[cpuid()] = 1;
   sched();
   release(&p->lock);
 }
@@ -568,11 +686,14 @@ wakeup(void *chan)
 {
   struct proc *p;
 
-  for(p = proc; p < &proc[NPROC]; p++) {
+  for(p = proc.list; p < &proc.list[NPROC]; p++) {
     if(p != myproc()){
       acquire(&p->lock);
       if(p->state == SLEEPING && p->chan == chan) {
         p->state = RUNNABLE;
+        acquire(&proc.lock);
+        enqueue(p);
+        release(&proc.lock);
       }
       release(&p->lock);
     }
@@ -587,13 +708,16 @@ kill(int pid)
 {
   struct proc *p;
 
-  for(p = proc; p < &proc[NPROC]; p++){
+  for(p = proc.list; p < &proc.list[NPROC]; p++){
     acquire(&p->lock);
     if(p->pid == pid){
       p->killed = 1;
       if(p->state == SLEEPING){
         // Wake process from sleep().
         p->state = RUNNABLE;
+        acquire(&proc.lock);
+        enqueue(p);
+        release(&proc.lock);
       }
       release(&p->lock);
       return 0;
@@ -670,14 +794,14 @@ procdump(void)
   char *state;
 
   printf("\n");
-  for(p = proc; p < &proc[NPROC]; p++){
+  for(p = proc.list; p < &proc.list[NPROC]; p++){
     if(p->state == UNUSED)
       continue;
     if(p->state >= 0 && p->state < NELEM(states) && states[p->state])
       state = states[p->state];
     else
       state = "???";
-    printf("%d %s %s", p->pid, state, p->name);
+    printf("%d %d %d %d %s %s", p->pid, p->priority, p->firstelection, p->popularity, state, p->name);
     printf("\n");
   }
 }
