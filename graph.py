@@ -30,13 +30,15 @@ def draw_basic_plot(xs, ys, label, color=None):
 
 
 def draw_bar_plot(groups, data, start=0, color=None, label=""):
-    plt.barh(groups, data, left=start, height=0.25, color=color, label=label)
+    bar = plt.barh(groups, data, left=start, height=0.25, color=color, label=label)
+    plt.bar_label(bar, label_type="center", annotation_clip=True)
 
 
 def change_plot_visuals():
     red_patch = mpatches.Patch(color="red", label="Proceso A")
     blue_patch = mpatches.Patch(color="blue", label="Proceso B")
     plt.legend(handles=[red_patch, blue_patch])
+    plt.xscale("log")
     plt.grid()
 
 
@@ -91,17 +93,17 @@ def graph_averages(case, averages):
 
 
 def graph_process(data, process_name, offset):
-    iobench = get_averages(data, process_name)
-    xs = np.arange(len(iobench))
+    averages = get_averages(data, process_name)
+    xs = np.arange(len(averages))
     plt.yticks(xs, NAMES)
-    for x, averages in zip(xs, iobench):
+    for x, averages in zip(xs, averages):
         graph_averages(x + offset, averages)
 
 
 def graph_data_from_json(json_file, process, offset):
     data = read_experiment_data_from_json(json_file)
     os.makedirs("graphs", exist_ok=True)
-    graph_process(data, "cpubench", offset)
+    graph_process(data, process, offset)
 
 
 if __name__ == "__main__":
