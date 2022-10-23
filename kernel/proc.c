@@ -27,8 +27,6 @@ index(uint pos)
 void
 enqueue(struct proc *p)
 {
-  acquire(&proc.lock);
-
   uint prior = p->priority;
   uint ini = proc.ini[prior];
   uint size = proc.size[prior];
@@ -42,23 +40,17 @@ enqueue(struct proc *p)
 
   if(prior > proc.maxprior)
     proc.maxprior = prior;
-  
-  release(&proc.lock);
 }
 
 struct proc
 *deque()
 {
-  acquire(&proc.lock);
-
   uint prior = proc.maxprior;
   uint ini = proc.ini[prior];
   uint size = proc.size[prior];
 
-  if(size == 0){
-    release(&proc.lock);
+  if(size == 0)
     return 0;
-  }
 
   if(proc.queue[prior][index(ini)] == 0)
     panic("invalid dequeue");
@@ -76,7 +68,6 @@ struct proc
     if(proc.size[i] != 0)
       proc.maxprior = i;
   
-  release(&proc.lock);
   return p;
 }
 
@@ -328,7 +319,9 @@ userinit(void)
   p->cwd = namei("/");
 
   p->state = RUNNABLE;
+  acquire(&proc.lock);
   enqueue(p);
+  release(&proc.lock);
 
   release(&p->lock);
 }
@@ -399,7 +392,9 @@ fork(void)
 
   acquire(&np->lock);
   np->state = RUNNABLE;
+  acquire(&proc.lock);
   enqueue(np);
+  release(&proc.lock);
   release(&np->lock);
 
   return pid;
@@ -515,6 +510,25 @@ wait(uint64 addr)
 }
 
 uint timerinterruption[NCPU];
+int antboost = 0;
+
+void
+priority_boost()
+{
+  struct proc *p;
+  
+  // Erase all process into the queue
+  while((p = deque()) != 0)
+    release(&p->lock);
+  
+  // Increment the priority for all process and insert into the queue
+  for(p = proc.list; p < &proc.list[NPROC]; p++){
+    if(p->state != UNUSED){
+      p->priority = NPRIO-1;
+      enqueue(p);
+    }
+  }
+}
 
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
@@ -535,7 +549,16 @@ scheduler(void)
     // Avoid deadlock by ensuring that devices can interrupt.
     intr_on();
 
+    acquire(&proc.lock);
+
+    // Priority boost
+    if(ticks % NBOOST == 0 && ticks != antboost){
+      antboost = ticks;
+      priority_boost();
+    }
+    
     if((p = deque()) != 0){
+      release(&proc.lock);
       // Switch to chosen process.  It is the process's job
       // to release its lock and then reacquire it
       // before jumping back to us.
@@ -550,7 +573,8 @@ scheduler(void)
       // It should have changed its p->state before coming back.
       c->proc = 0;
       release(&p->lock);
-    }
+    }else release(&proc.lock);
+    
   }
 }
 
@@ -593,7 +617,9 @@ yield(void)
   if(p->priority != 0)
     p->priority--;
   
+  acquire(&proc.lock);
   enqueue(p);
+  release(&proc.lock);
 
   timerinterruption[cpuid()] = 1;
   sched();
@@ -642,10 +668,6 @@ sleep(void *chan, struct spinlock *lk)
   p->chan = chan;
   p->state = SLEEPING;
 
-  // Scheduling --> Interrupt that wasn't timer
-  if(p->priority != NPRIO-1)
-    p->priority++;
-
   sched();
 
   // Tidy up.
@@ -668,7 +690,9 @@ wakeup(void *chan)
       acquire(&p->lock);
       if(p->state == SLEEPING && p->chan == chan) {
         p->state = RUNNABLE;
+        acquire(&proc.lock);
         enqueue(p);
+        release(&proc.lock);
       }
       release(&p->lock);
     }
@@ -690,7 +714,9 @@ kill(int pid)
       if(p->state == SLEEPING){
         // Wake process from sleep().
         p->state = RUNNABLE;
+        acquire(&proc.lock);
         enqueue(p);
+        release(&proc.lock);
       }
       release(&p->lock);
       return 0;

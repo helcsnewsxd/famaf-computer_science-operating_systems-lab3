@@ -5,6 +5,7 @@
 #define NINODE       50  // maximum number of active i-nodes
 #define NDEV         10  // maximum major device number
 #define NPRIO         3  // upper limit process priority (i.e., between 0 and NPRIO-1 inclusive)
+#define NBOOST       (1<<8)  // ticks until next priority boost
 #define ROOTDEV       1  // device number of file system root disk
 #define MAXARG       32  // max exec arguments
 #define MAXOPBLOCKS  10  // max # of blocks any FS op writes
