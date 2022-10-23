@@ -525,7 +525,8 @@ priority_boost()
   for(p = proc.list; p < &proc.list[NPROC]; p++){
     if(p->state != UNUSED){
       p->priority = NPRIO-1;
-      enqueue(p);
+      if(p->state == RUNNABLE)
+        enqueue(p);
     }
   }
 }
