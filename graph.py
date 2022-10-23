@@ -1,7 +1,25 @@
+from matplotlib import numpy as np
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import json, os
 
-JSON_FILE = "experiments.json"
+JSON_FILES = [
+    "./experiments/gonza/experiments_RR_escenario0.json",
+    "./experiments/gonza/experiments_RR_escenario1.json",
+]
+
+NAMES = [
+    "Caso 0:",
+    "Caso 1:",
+    "Caso 2:",
+    "Caso 3:",
+    "Caso 4:",
+    "Caso 5:",
+    "Caso 6:",
+    "Caso 7:",
+]
+
+OFFSETS = [-0.15, 0.15]
 
 
 def draw_basic_plot(xs, ys, label, color=None):
@@ -11,12 +29,14 @@ def draw_basic_plot(xs, ys, label, color=None):
         plt.plot(xs, ys, label=label)
 
 
-def draw_bar_plot(groups, data):
-    plt.bar(groups, data, width=0.25)
+def draw_bar_plot(groups, data, start=0, color=None, label=""):
+    plt.barh(groups, data, left=start, height=0.25, color=color, label=label)
 
 
 def change_plot_visuals():
-    plt.legend()
+    red_patch = mpatches.Patch(color="red", label="Proceso A")
+    blue_patch = mpatches.Patch(color="blue", label="Proceso B")
+    plt.legend(handles=[red_patch, blue_patch])
     plt.grid()
 
 
@@ -57,12 +77,42 @@ def get_averages(experiment_data, process_name):
     return result
 
 
-def main():
-    data = read_experiment_data_from_json(JSON_FILE)
+def graph_averages(case, averages):
+    bottom = 0
+    for average in averages:
+
+        if bottom:
+            color = "blue"
+        else:
+            color = "red"
+
+        draw_bar_plot(case, average, bottom, color=color)
+        bottom = average
+
+
+def graph_process(data, process_name, offset):
+    iobench = get_averages(data, process_name)
+    xs = np.arange(len(iobench))
+    plt.yticks(xs, NAMES)
+    for x, averages in zip(xs, iobench):
+        graph_averages(x + offset, averages)
+
+
+def graph_data_from_json(json_file, process, offset):
+    data = read_experiment_data_from_json(json_file)
     os.makedirs("graphs", exist_ok=True)
-    iobench = get_averages(data, "iobench")
-    cpubench = get_averages(data, "cpubench")
+    graph_process(data, "cpubench", offset)
 
 
 if __name__ == "__main__":
-    main()
+    for json_file, offset in zip(JSON_FILES, OFFSETS):
+        graph_data_from_json(json_file, "iobench", offset)
+
+    plt.title("iobench")
+    show_graph()
+
+    for json_file, offset in zip(JSON_FILES, OFFSETS):
+        graph_data_from_json(json_file, "cpubench", offset)
+
+    plt.title("cpubench")
+    show_graph()
