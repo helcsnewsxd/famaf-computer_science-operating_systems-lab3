@@ -1,6 +1,6 @@
 # Segunda Parte: Cómo el planificador afecta a los procesos
 
-Info del script construído y detalles previos
+Para conocer el comportamiento de los procesos y las operaciones respectivas realizadas en el procesador, nos centramos en estudiar al planificador de xv6. Para ello, utilizamos los programas iobench y cpubench. En los siguientes casos y escenarios, presentamos los datos obtenidos.
 
 ## Caso 0: 1 iobench solo
 
