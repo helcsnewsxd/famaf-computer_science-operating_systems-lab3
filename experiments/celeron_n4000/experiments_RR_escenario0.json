@@ -917,6 +917,195 @@
         }
     },
     {
+        "command": "cpubench &\n iobench &\n iobench &",
+        "output": {
+            "cpubench4": [
+                {
+                    "time": 0.0,
+                    "content": "4: 29606 KFLOP100T"
+                },
+                {
+                    "time": 10.25,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 21.37,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 40.57,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 40.8,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 59.77,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 61.41,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 78.97,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 82.0,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 98.17,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 102.59,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 117.37,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 123.17,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 136.57,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 144.42,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 155.77,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 174.97,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 175.63,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 194.17,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 196.21,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 213.37,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 216.81,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 232.57,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 237.38,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 251.77,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 258.63,
+                    "content": "4: 30198 KFLOP100T"
+                },
+                {
+                    "time": 270.97,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 279.21,
+                    "content": "4: 30388 KFLOP100T"
+                },
+                {
+                    "time": 290.17,
+                    "content": "4: 30198 KFLOP100T"
+                }
+            ],
+            "iobench8": [
+                {
+                    "time": 20.19,
+                    "content": "8: 30 IOP100T"
+                },
+                {
+                    "time": 30.17,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 51.42,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 72.02,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 92.61,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 113.2,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 133.78,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 155.02,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 165.0,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 185.58,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 206.17,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 227.41,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 247.98,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 268.57,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 289.81,
+                    "content": "8: 33 IOP100T"
+                },
+                {
+                    "time": 299.79,
+                    "content": "8: 33 IOP100T"
+                }
+            ]
+        }
+    },
+    {
         "command": "iobench &\n cpubench &\n cpubench &",
         "output": {
             "cpubench8": [
@@ -1179,195 +1368,6 @@
                 {
                     "time": 266.26,
                     "content": "4: 16 IOP100T"
-                }
-            ]
-        }
-    },
-    {
-        "command": "cpubench &\n iobench &\n iobench &",
-        "output": {
-            "cpubench4": [
-                {
-                    "time": 0.0,
-                    "content": "4: 29606 KFLOP100T"
-                },
-                {
-                    "time": 10.25,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 21.37,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 40.57,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 40.8,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 59.77,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 61.41,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 78.97,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 82.0,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 98.17,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 102.59,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 117.37,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 123.17,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 136.57,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 144.42,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 155.77,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 174.97,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 175.63,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 194.17,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 196.21,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 213.37,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 216.81,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 232.57,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 237.38,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 251.77,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 258.63,
-                    "content": "4: 30198 KFLOP100T"
-                },
-                {
-                    "time": 270.97,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 279.21,
-                    "content": "4: 30388 KFLOP100T"
-                },
-                {
-                    "time": 290.17,
-                    "content": "4: 30198 KFLOP100T"
-                }
-            ],
-            "iobench8": [
-                {
-                    "time": 20.19,
-                    "content": "8: 30 IOP100T"
-                },
-                {
-                    "time": 30.17,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 51.42,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 72.02,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 92.61,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 113.2,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 133.78,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 155.02,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 165.0,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 185.58,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 206.17,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 227.41,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 247.98,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 268.57,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 289.81,
-                    "content": "8: 33 IOP100T"
-                },
-                {
-                    "time": 299.79,
-                    "content": "8: 33 IOP100T"
                 }
             ]
         }
