@@ -63,10 +63,8 @@ struct proc
   proc.ini[prior] = index(ini+1);
   proc.size[prior]--;
 
-  proc.maxprior = 0;
-  for(uint i = 1; i < NPRIO; i++)
-    if(proc.size[i] != 0)
-      proc.maxprior = i;
+  while(proc.maxprior != 0 && proc.size[proc.maxprior] == 0)
+    proc.maxprior--;
   
   return p;
 }
