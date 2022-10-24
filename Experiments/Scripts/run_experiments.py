@@ -3,6 +3,12 @@ from subprocess import Popen, PIPE
 import time, sys, json, os
 from typing import Union
 
+###################
+#### IMPORTANT ####
+###################
+
+# Before running execute 'make CPUS=1 qemu' at least once
+
 # HOW TO RUN
 #   python run_experiments.py
 
@@ -19,8 +25,11 @@ COMMANDS = [
     "iobench &\n cpubench &\n cpubench & \n iobench &",
 ]
 
+WORKDIR = "../../"
 XV6_CMD = ["make", "CPUS=1", "qemu"]
 INITIAL_WAIT = 2
+
+ENABLE_PROCDUMP = True
 PROCDUMP_INTERVAL = 15
 
 
@@ -80,7 +89,8 @@ def get_experiment_data(command: str, duration: Union[int, float]):
             + " "
         )
 
-        if time_passed >= prev_procdump_time + PROCDUMP_INTERVAL:
+        its_time_to_procdump = time_passed >= prev_procdump_time + PROCDUMP_INTERVAL
+        if ENABLE_PROCDUMP and its_time_to_procdump:
             qemu.stdout.flush()
             qemu.stdin.write(chr(16).encode())
             qemu.stdin.flush()
@@ -120,6 +130,7 @@ def write_json(data: list[dict], filename: str) -> None:
 
 
 def main():
+    os.chdir(WORKDIR)
     results = [get_experiment_data(command, DURATION) for command in COMMANDS]
     write_json(results, "experiments.json")
     print(results)
