@@ -10,6 +10,16 @@ JSON_FILES = [
     "./experiments/i5_12400f/experiments_RR_escenario3.json",
 ]
 
+OFFSETS = [0.30, 0.10, -0.10, -0.30]
+
+COLORS = ["teal", "green", "blue", "purple"]
+LABELS = [
+    "Quantum 100%",
+    "Quantum 10%",
+    "Quantum 1%",
+    "Quantum 0.1%",
+]
+
 NAMES = [
     "Caso 0:",
     "Caso 1:",
@@ -21,15 +31,6 @@ NAMES = [
     "Caso 7:",
 ]
 
-OFFSETS = [-0.30, -0.10, 0.10, 0.30]
-
-
-def draw_basic_plot(xs, ys, label, color=None):
-    if color:
-        plt.plot(xs, ys, label=label, color=color)
-    else:
-        plt.plot(xs, ys, label=label)
-
 
 def draw_bar_plot(groups, data, start=0, color=None, label=""):
     bar = plt.barh(groups, data, left=start, height=0.15, color=color, label=label)
@@ -37,9 +38,10 @@ def draw_bar_plot(groups, data, start=0, color=None, label=""):
 
 
 def change_plot_visuals():
-    red_patch = mpatches.Patch(color="red", label="Proceso A")
-    blue_patch = mpatches.Patch(color="blue", label="Proceso B")
-    plt.legend(handles=[red_patch, blue_patch])
+    handles = [
+        mpatches.Patch(color=color, label=label) for color, label in zip(COLORS, LABELS)
+    ]
+    plt.legend(handles=handles)
     plt.xscale("log")
     plt.grid()
 
@@ -56,67 +58,59 @@ def save_fig_to_path(path):
     plt.close()
 
 
-def read_experiment_data_from_json(filename: str) -> list[dict]:
-    with open(filename, "r") as json_file:
-        file_contents = json_file.read()
-        parsed_json = json.loads(file_contents)
-        return parsed_json
-
-
 def get_average(output):
     if output:
         values = [int(value["content"].split(" ")[1]) for value in output]
         return round(sum(values) / len(values), 2)
 
 
-def get_averages(experiment_data, process_name):
-    result = []
-    for experiment in experiment_data:
-        averages = [
-            get_average(value)
-            for process, value in experiment["output"].items()
-            if process_name in process
-        ]
-        result.append(averages)
-    return result
+class ProcessPlotter:
+    def __init__(self, json_file, process_name, offset, color):
+        self.json_file = json_file
+        self.process_name = process_name
+        self.offset = offset
+        self.color = color
+
+        self.experiment_data = self.set_experiment_data_from_json()
+        self.averages = self.get_averages()
+
+    def set_experiment_data_from_json(self):
+        with open(self.json_file, "r") as json_file:
+            file_contents = json_file.read()
+            parsed_json = json.loads(file_contents)
+            return parsed_json
+
+    def get_averages(self):
+        result = []
+        for experiment in self.experiment_data:
+            average = None
+            for process, value in experiment["output"].items():
+                if self.process_name in process:
+                    average = get_average(value)
+
+            result.append(average)
+        return result
+
+    def graph_process(self):
+        xs = np.arange(len(self.averages))
+        plt.yticks(xs, NAMES)
+        for x, average in zip(xs, self.averages):
+            if average:
+                draw_bar_plot(x + self.offset, average, color=self.color)
 
 
-def graph_averages(case, averages):
-    bottom = 0
-    for average in averages:
-
-        if bottom:
-            color = "blue"
-        else:
-            color = "red"
-
-        draw_bar_plot(case, average, bottom, color=color)
-        bottom = average
+# os.makedirs("graphs", exist_ok=True)
 
 
-def graph_process(data, process_name, offset):
-    averages = get_averages(data, process_name)
-    xs = np.arange(len(averages))
-    plt.yticks(xs, NAMES)
-    for x, averages in zip(xs, averages):
-        graph_averages(x + offset, averages)
+def main(process_name):
+    for json_file, offset, color in zip(JSON_FILES, OFFSETS, COLORS):
+        plotter = ProcessPlotter(json_file, process_name, offset, color)
+        plotter.graph_process()
 
-
-def graph_data_from_json(json_file, process, offset):
-    data = read_experiment_data_from_json(json_file)
-    os.makedirs("graphs", exist_ok=True)
-    graph_process(data, process, offset)
+    plt.title(process_name)
+    show_graph()
 
 
 if __name__ == "__main__":
-    for json_file, offset in zip(JSON_FILES, OFFSETS):
-        graph_data_from_json(json_file, "iobench", offset)
-
-    plt.title("iobench")
-    show_graph()
-
-    for json_file, offset in zip(JSON_FILES, OFFSETS):
-        graph_data_from_json(json_file, "cpubench", offset)
-
-    plt.title("cpubench")
-    show_graph()
+    main("iobench")
+    main("cpubench")
