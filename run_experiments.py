@@ -16,7 +16,7 @@ COMMANDS = [
     "cpubench &\n cpubench &",
     "iobench &\n cpubench &\n cpubench &",
     "cpubench &\n iobench &\n iobench &",
-    "iobench &\n cpubench &\n cpubench & \n iobench",
+    "iobench &\n cpubench &\n cpubench & \n iobench &",
 ]
 
 XV6_CMD = ["make", "CPUS=1", "qemu"]
