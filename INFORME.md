@@ -453,6 +453,9 @@ Las principales herramientas utilizadas por el grupo en la implementación y div
  - [**Repositorio XV6**](https://github.com/mit-pdos/xv6-book) 
 
 ### Conceptos teóricos utilizados
+ - Planificador MLFQ y RR, reglas y funcionamiento
+ - Quantum y context switch
+ - Timer interrupts, ticks de reloj
 
 ## *Desarrollo*
 
@@ -467,7 +470,6 @@ Las principales herramientas utilizadas por el grupo en la implementación y div
 - [GDB](https://sourceware.org/gdb/), depurador estándar para el compilador GNU.
 
 # Desarrollo del proyecto
-Hicimos una división del trabajo centrándonos principalmente en las mediciones del cpubench e iobench, y por otro lado la implementación de MLFQ.
 
 ## Problemas
 [AGREGAR]
@@ -477,7 +479,8 @@ La comunicación se basó fuertemente en plataformas como [Discord](https://disc
 
 ## *Workflow de desarrollo*
 ### *Branches*
-Nuestro workflow se apoyó fuertemente en el uso de branchs dentro del repositorio de bitbucket.
+Nuestro workflow se apoyó fuertemente en el uso de branchs dentro del repositorio de bitbucket. Para cada parte del proyecto, primero se creaba una nueva branch para desarrollarlo y cuando ya estaba completado, era fusionado a la rama principal
 
 # Conclusiones
-[AGREGAR]
+Este trabajo nos ayudó a entender de forma directa y real, el papel importante que toma un planificador de recursos y sus demás componentes en el funcionamiento del sistema operativo. Aprendimos cómo hace el OS para regular el tráfico de procesos y cómo administra el uso del procesador para ejecutar los mismo de forma eficiente, sin sobrecargar al CPU. También, gracias al estudio del código de xv6, entendimos cómo las partes vistas en los laboratorios se unen de forma íntegra para beneficiar un adecuado funcionamiento del OS.
+Pudimos recorrer aquellas bases fundamentales de los planificadores de procesos gracias al estudio de los algoritmos de RR y MLFQ, como así también realizar un análisis métrico de sus rendimientos en distintos casos y escenarios.
