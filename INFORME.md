@@ -29,7 +29,8 @@
  - [Webgrafía](#markdown-header-webgrafia)
 
 # Introducción
-En este laboratorio nos centramos en conocer el funcionamiento de xv6 con relación a la administración de los recursos usados por los procesos. Trabajamos sobre el algoritmo responsable del sistema de planificación (Round Robin), sus detalles de implementación en xv6 y su comportamiento ante exigencias de IO y/o CPU. Por último, implementamos un planificador de procesos nuevo, inspirándonos en MLFQ. Para ello, agregamos prioridades a los procesos y, como punto extra, implementamos un priority boost.
+En este laboratorio nos centramos en conocer el funcionamiento de xv6 con relación a la administración de los recursos usados por los procesos. Trabajamos sobre el algoritmo responsable del sistema de planificación (Round Robin), sus detalles de implementación en xv6 y su comportamiento ante exigencias de IO y/o CPU. También, implementamos un planificador de procesos nuevo, inspirándonos en MLFQ. Para ello, agregamos prioridades a los procesos y, como punto extra, implementamos un priority boost.
+Por último, con ayuda de un script realizado en python, llevamos a cabo un estudio meticuloso sobre el rendimiento de los distintos planificadores en diversos casos y escenarios.
 
 # ¿Cómo correr el código?
 ## Instalación
@@ -471,7 +472,7 @@ Las principales herramientas utilizadas por el grupo en la implementación y div
 
 # Desarrollo del proyecto
 
-## Problemas
+## *Problemas*
 [AGREGAR]
 
 ## *Comunicación*
