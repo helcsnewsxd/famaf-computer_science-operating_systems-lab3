@@ -62,7 +62,7 @@ def show_graph():
 
 def save_fig_to_path(path):
     change_plot_visuals()
-    plt.savefig(path, dpi=100, bbox_inches="tight")
+    plt.savefig(path, dpi=800, bbox_inches="tight")
     plt.close()
 
 

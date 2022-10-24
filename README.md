@@ -176,7 +176,13 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 
 ## Conclusiones y gráficos de interes
 
+[](graphs/iobench-i512400f-RR.png)
+[](graphs/iobench-i512400f-MLFQ.png)
+[](graphs/cpubench-i512400f-RR.png)
+[](graphs/cpubench-i512400f-MLFQ.png)
+
 ### Diferentes tamaños de quantums
+
 - En el **caso 0** se observa que el mejor escenario para los proceso IO-bond es el **escenario 1**, teniendo resultados ligeramente mejores que los de los **escenarios 0 y 2**. El **escenario 3** da el peor desempeño, debido a lo corto de su quantum, que lo vuelve inviable.
 
 - En el **caso 1** se observa que se cumplió la hipótesis de que menor quantum implica peor desempeño para los procesos CPU-bond, esto porque mientras más largo el quantum, menor cantidad de tiempo se lo pasa el SO haciendo context switch.
