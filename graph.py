@@ -4,8 +4,10 @@ import matplotlib.pyplot as plt
 import json, os
 
 JSON_FILES = [
-    "./experiments/gonza/experiments_RR_escenario0.json",
-    "./experiments/gonza/experiments_RR_escenario1.json",
+    "./experiments/i5_12400f/experiments_RR_escenario0.json",
+    "./experiments/i5_12400f/experiments_RR_escenario1.json",
+    "./experiments/i5_12400f/experiments_RR_escenario2.json",
+    "./experiments/i5_12400f/experiments_RR_escenario3.json",
 ]
 
 NAMES = [
@@ -19,7 +21,7 @@ NAMES = [
     "Caso 7:",
 ]
 
-OFFSETS = [-0.15, 0.15]
+OFFSETS = [-0.30, -0.10, 0.10, 0.30]
 
 
 def draw_basic_plot(xs, ys, label, color=None):
@@ -30,7 +32,7 @@ def draw_basic_plot(xs, ys, label, color=None):
 
 
 def draw_bar_plot(groups, data, start=0, color=None, label=""):
-    bar = plt.barh(groups, data, left=start, height=0.25, color=color, label=label)
+    bar = plt.barh(groups, data, left=start, height=0.15, color=color, label=label)
     plt.bar_label(bar, label_type="center", annotation_clip=True)
 
 
