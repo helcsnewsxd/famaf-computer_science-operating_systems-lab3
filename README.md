@@ -13,8 +13,8 @@ Para los procesos CPU-bound mediremos cuantas "1024 operaciones de punto flotant
 # Experimento
 Vamos a ejecutar diferentes casos en diferentes escenarios donde mediremos los datos de los procesos IO-bound y los procesos CPU-bound.
 Las mediciones se realizarán (aproximadamente) cada 100 (MINTICKS=100) ticks de reloj, para cada proceso en ejecución durante el caso. 
-Todos los casos en los distintos escenarios se ejecutan durante 5 minutos en un equipo con las siguientes caracteristicas: 
-- INSERTAR EQUIPO UTILIZADO 
+Todos los casos en los distintos escenarios se ejecutan durante 5 minutos en dos equipos, para analizar si se ve un mayor cambio en un procesador potente o en uno de menores recursos. Los equipos cuentan con las siguientes caracteristicas: 
+- i5 12400f y 16GB de RAM / Celeron N4000 y 4GB de RAM
 - Desconectado de internet
 - Cantidad mínima de procesos en ejecución en el sistema, además de QEMU y otros procesos necesarios para realizar el experimento
 En cada caso, las mediciones de cada proceso se promediaran para luego analizarse.
@@ -176,10 +176,10 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 
 ## Conclusiones y gráficos de interes
 
-[](graphs/iobench-i512400f-RR.png)
-[](graphs/iobench-i512400f-MLFQ.png)
-[](graphs/cpubench-i512400f-RR.png)
-[](graphs/cpubench-i512400f-MLFQ.png)
+![](graphs/iobench-i512400f-RR.png)
+![](graphs/iobench-i512400f-MLFQ.png)
+![](graphs/cpubench-i512400f-RR.png)
+![](graphs/cpubench-i512400f-MLFQ.png)
 
 ### Diferentes tamaños de quantums
 
@@ -194,7 +194,6 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 - En los casos donde se ejecutan procesos IO-bond junto con CPU-bond (**casos 2,5,6 y7**), el escenario más beneficioso para los procesos IO-bond es generalmente el **escenario 3**, y el más beneficioso para los procesos CPU-bond es generalmente el **escenario 1**, apoyando la hipótesis dicha anteriormente. Sin embargo, varia un poco entre el planificador RR y MLFQ y no es absoluto, ya que en algunos casos el **escenario 2** es más beneficioso que el **escenario 3** para los procesos IO-bond.
 
 - Todas las conclusiones anteriores aplican tanto para el planificador RR como para el MLFQ sin priority boost, ya que los resultados entre ambos planificadores no tienen grandes variaciones.
-
 
 
 ### Desempeño de los procesos al realizar time-sharing
@@ -215,4 +214,9 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 - Para los análisis anteriores se usaron sobre todo los **escenarios 0, 1 y 2**, ya que el **escenario 3** al tener un quantum tan pequeño genera ciertas mediciones extrañas, además de que no consideramos que sea viable querer utilizar XV6 con un planificador que tenga el quantum así de pequeño.
 
 ### Comparación MLFQ vs RR
-- En los casos básicos (**casos 0, 1, 2, 3 y 4**) no se ve gran diferencia entre los resultados de los planificadores MLFQ y RR, pero en los casos opcionales (**casos 5, 6 y 7**) si se ve una mayor diferencia, aunque tampoco es muy grande. En esos casos opcionales se ve que los procesos IO-bond tienen una mejor respuesta y desempeño, mostrando que el SO los ejecuta mayor cantidad de veces, priorizandolos frente a los procesos CPU-bond y generando un contraste con el planificador RR.
+- En los casos básicos (**casos 0, 1, 2, 3 y 4**) no se ve gran diferencia entre los resultados de los planificadores MLFQ y RR.
+- En los casos opcionales (**casos 5, 6 y 7**) si se ve una mayor diferencia, aunque tampoco es muy grande. En esos casos opcionales se ve que los procesos IO-bond tienen una mejor respuesta y desempeño sin que los procesos CPU-bond se vean muy perjudicados, mostrando que el SO los ejecuta mayor cantidad de veces, priorizandolos frente a los procesos CPU-bond y generando un contraste con el planificador RR.
+
+
+# Resumen de los resultados
+- 
