@@ -3,11 +3,19 @@ import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import json, os
 
-JSON_FILES = [
-    "./experiments/i5_12400f/experiments_RR_escenario0.json",
-    "./experiments/i5_12400f/experiments_RR_escenario1.json",
-    "./experiments/i5_12400f/experiments_RR_escenario2.json",
-    "./experiments/i5_12400f/experiments_RR_escenario3.json",
+SCHEDULERS = [
+    [
+        "./experiments/i5_12400f/experiments_RR_escenario0.json",
+        "./experiments/i5_12400f/experiments_RR_escenario1.json",
+        "./experiments/i5_12400f/experiments_RR_escenario2.json",
+        "./experiments/i5_12400f/experiments_RR_escenario3.json",
+    ],
+    [
+        "./experiments/i5_12400f/experiments_MLFQ_escenario0.json",
+        "./experiments/i5_12400f/experiments_MLFQ_escenario1.json",
+        "./experiments/i5_12400f/experiments_MLFQ_escenario2.json",
+        "./experiments/i5_12400f/experiments_MLFQ_escenario3.json",
+    ],
 ]
 
 OFFSETS = [0.30, 0.10, -0.10, -0.30]
@@ -21,14 +29,14 @@ LABELS = [
 ]
 
 NAMES = [
-    "Caso 0:",
-    "Caso 1:",
-    "Caso 2:",
-    "Caso 3:",
-    "Caso 4:",
-    "Caso 5:",
-    "Caso 6:",
-    "Caso 7:",
+    "iobench",
+    "cpubench",
+    "iobench,\n cpubench",
+    "2 iobench",
+    "2 cpubench",
+    "1 cpubench,\n 2 iobench",
+    "1 iobench,\n 2 cpubench",
+    "2 iobench,\n 2 cpubench",
 ]
 
 
@@ -54,7 +62,7 @@ def show_graph():
 
 def save_fig_to_path(path):
     change_plot_visuals()
-    plt.savefig(path, dpi=100)
+    plt.savefig(path, dpi=100, bbox_inches="tight")
     plt.close()
 
 
@@ -99,18 +107,18 @@ class ProcessPlotter:
                 draw_bar_plot(x + self.offset, average, color=self.color)
 
 
-# os.makedirs("graphs", exist_ok=True)
-
-
-def main(process_name):
-    for json_file, offset, color in zip(JSON_FILES, OFFSETS, COLORS):
+def main(process_name, json_files):
+    for json_file, offset, color in zip(json_files, OFFSETS, COLORS):
         plotter = ProcessPlotter(json_file, process_name, offset, color)
         plotter.graph_process()
 
-    plt.title(process_name)
-    show_graph()
+    title = f"{process_name} - {json_files[0].split('/')[2].replace('_', ' ')} - {json_files[0].split('_')[2]}"
+    plt.title(title)
+    save_fig_to_path(f"./graphs/{title.replace(' ', '')}")
 
 
 if __name__ == "__main__":
-    main("iobench")
-    main("cpubench")
+    os.makedirs("graphs", exist_ok=True)
+    for json_files in SCHEDULERS:
+        main("iobench", json_files)
+        main("cpubench", json_files)
