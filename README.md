@@ -36,7 +36,7 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 
 ###  Escenarios
 - **Escenario 0**: quantum por defecto
-- **Escenario 1**: quantum 10 veces más corto
-- **Escenario 2**: quantum 100 veces más corto
-- **Escenario 3**: quantum 1000 veces más corto
+- **Escenario 1**: quantum 10 veces más corto (Para mantener un comportamiento similar en las mediciones, el valor de MINTICKS es 10 veces más largo)
+- **Escenario 2**: quantum 100 veces más corto (Para mantener un comportamiento similar en las mediciones, el valor de MINTICKS es 100 veces más largo)
+- **Escenario 3**: quantum 1000 veces más corto (Para mantener un comportamiento similar en las mediciones, el valor de MINTICKS es 1000 veces más largo)
 
