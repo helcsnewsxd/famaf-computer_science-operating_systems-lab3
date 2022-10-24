@@ -160,7 +160,7 @@ De igual modo, cabe aclarar, el quantum es de 1000000 ciclos ya que el tiempo "r
 
 Como se ha hablado anteriormente, el cambio de contexto se realiza en [swtch.S](/kernel/swtch.S) bajo la función del mismo nombre, donde simplemente se guardan los registros del *old context* (el del proceso que dejó la CPU) y se cargan los del *new context* (nuevo proceso que se carga en la CPU). La cantidad de instrucciones ejecutadas por el procesador (guardado y cargado del estado de los procesos) son 28.
 Como puede visualizarse en la siguiente imagen, el hacer el context switch durante la ejecución del cpubench e iobench de forma paralela (`cpubench &; iobench &`) tarda algunos ciclos de reloj produciendo, a veces, el aumento de un tick de reloj (lo que implica que el quantum terminó y comienza otro):
-![](/Imagenes/Ticks%20de%20reloj%20del%20context%20switch.png)
+![](/Figures/Ticks-de-reloj-del-context-switch.png)
 
 Esto se ha obtenido modificando levemente el scheduler en la parte en la que se hace el switcheo:
 ```c
