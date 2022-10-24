@@ -989,369 +989,6 @@
         }
     },
     {
-        "command": "iobench &\n cpubench &\n cpubench &",
-        "output": {
-            "cpubench6": [
-                {
-                    "time": 0.0,
-                    "content": "6: 541 KFLOP10000T"
-                },
-                {
-                    "time": 10.39,
-                    "content": "6: 537 KFLOP10000T"
-                },
-                {
-                    "time": 20.74,
-                    "content": "6: 540 KFLOP10000T"
-                },
-                {
-                    "time": 40.5,
-                    "content": "6: 536 KFLOP10000T"
-                },
-                {
-                    "time": 50.56,
-                    "content": "6: 538 KFLOP10000T"
-                },
-                {
-                    "time": 51.73,
-                    "content": "6: 537 KFLOP10000T"
-                },
-                {
-                    "time": 70.92,
-                    "content": "6: 538 KFLOP10000T"
-                },
-                {
-                    "time": 72.41,
-                    "content": "6: 540 KFLOP10000T"
-                },
-                {
-                    "time": 82.77,
-                    "content": "6: 538 KFLOP10000T"
-                },
-                {
-                    "time": 93.08,
-                    "content": "6: 540 KFLOP10000T"
-                },
-                {
-                    "time": 103.43,
-                    "content": "6: 539 KFLOP10000T"
-                },
-                {
-                    "time": 113.76,
-                    "content": "6: 539 KFLOP10000T"
-                },
-                {
-                    "time": 124.1,
-                    "content": "6: 539 KFLOP10000T"
-                },
-                {
-                    "time": 134.42,
-                    "content": "6: 539 KFLOP10000T"
-                },
-                {
-                    "time": 144.75,
-                    "content": "6: 537 KFLOP10000T"
-                },
-                {
-                    "time": 155.11,
-                    "content": "6: 530 KFLOP10000T"
-                },
-                {
-                    "time": 165.45,
-                    "content": "6: 533 KFLOP10000T"
-                },
-                {
-                    "time": 175.77,
-                    "content": "6: 541 KFLOP10000T"
-                },
-                {
-                    "time": 186.11,
-                    "content": "6: 539 KFLOP10000T"
-                },
-                {
-                    "time": 196.44,
-                    "content": "6: 537 KFLOP10000T"
-                },
-                {
-                    "time": 206.77,
-                    "content": "6: 539 KFLOP10000T"
-                },
-                {
-                    "time": 217.11,
-                    "content": "6: 533 KFLOP10000T"
-                },
-                {
-                    "time": 227.43,
-                    "content": "6: 538 KFLOP10000T"
-                },
-                {
-                    "time": 237.76,
-                    "content": "6: 538 KFLOP10000T"
-                },
-                {
-                    "time": 248.09,
-                    "content": "6: 539 KFLOP10000T"
-                },
-                {
-                    "time": 258.44,
-                    "content": "6: 534 KFLOP10000T"
-                },
-                {
-                    "time": 268.77,
-                    "content": "6: 536 KFLOP10000T"
-                },
-                {
-                    "time": 279.09,
-                    "content": "6: 537 KFLOP10000T"
-                },
-                {
-                    "time": 289.43,
-                    "content": "6: 540 KFLOP10000T"
-                },
-                {
-                    "time": 299.76,
-                    "content": "6: 539 KFLOP10000T"
-                }
-            ],
-            "cpubench8": [
-                {
-                    "time": 10.12,
-                    "content": "8: 727 KFLOP10000T"
-                },
-                {
-                    "time": 20.29,
-                    "content": "8: 722 KFLOP10000T"
-                },
-                {
-                    "time": 30.38,
-                    "content": "8: 724 KFLOP10000T"
-                },
-                {
-                    "time": 31.07,
-                    "content": "8: 722 KFLOP10000T"
-                },
-                {
-                    "time": 41.4,
-                    "content": "8: 723 KFLOP10000T"
-                },
-                {
-                    "time": 60.85,
-                    "content": "8: 725 KFLOP10000T"
-                },
-                {
-                    "time": 62.11,
-                    "content": "8: 724 KFLOP10000T"
-                },
-                {
-                    "time": 81.07,
-                    "content": "8: 727 KFLOP10000T"
-                },
-                {
-                    "time": 91.19,
-                    "content": "8: 725 KFLOP10000T"
-                },
-                {
-                    "time": 101.28,
-                    "content": "8: 722 KFLOP10000T"
-                },
-                {
-                    "time": 111.41,
-                    "content": "8: 726 KFLOP10000T"
-                },
-                {
-                    "time": 121.52,
-                    "content": "8: 726 KFLOP10000T"
-                },
-                {
-                    "time": 131.61,
-                    "content": "8: 724 KFLOP10000T"
-                },
-                {
-                    "time": 141.72,
-                    "content": "8: 725 KFLOP10000T"
-                },
-                {
-                    "time": 151.85,
-                    "content": "8: 722 KFLOP10000T"
-                },
-                {
-                    "time": 162.14,
-                    "content": "8: 715 KFLOP10000T"
-                },
-                {
-                    "time": 172.35,
-                    "content": "8: 717 KFLOP10000T"
-                },
-                {
-                    "time": 182.43,
-                    "content": "8: 724 KFLOP10000T"
-                },
-                {
-                    "time": 192.54,
-                    "content": "8: 725 KFLOP10000T"
-                },
-                {
-                    "time": 202.67,
-                    "content": "8: 723 KFLOP10000T"
-                },
-                {
-                    "time": 212.79,
-                    "content": "8: 725 KFLOP10000T"
-                },
-                {
-                    "time": 223.01,
-                    "content": "8: 716 KFLOP10000T"
-                },
-                {
-                    "time": 233.12,
-                    "content": "8: 723 KFLOP10000T"
-                },
-                {
-                    "time": 243.25,
-                    "content": "8: 725 KFLOP10000T"
-                },
-                {
-                    "time": 253.36,
-                    "content": "8: 725 KFLOP10000T"
-                },
-                {
-                    "time": 263.55,
-                    "content": "8: 721 KFLOP10000T"
-                },
-                {
-                    "time": 273.73,
-                    "content": "8: 721 KFLOP10000T"
-                },
-                {
-                    "time": 283.86,
-                    "content": "8: 723 KFLOP10000T"
-                },
-                {
-                    "time": 293.96,
-                    "content": "8: 724 KFLOP10000T"
-                }
-            ],
-            "iobench4": [
-                {
-                    "time": 10.32,
-                    "content": "4: 1614 IOP10000T"
-                },
-                {
-                    "time": 20.4,
-                    "content": "4: 1614 IOP10000T"
-                },
-                {
-                    "time": 30.45,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 40.54,
-                    "content": "4: 1614 IOP10000T"
-                },
-                {
-                    "time": 50.67,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 60.91,
-                    "content": "4: 1616 IOP10000T"
-                },
-                {
-                    "time": 70.97,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 81.21,
-                    "content": "4: 1614 IOP10000T"
-                },
-                {
-                    "time": 91.5,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 101.56,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 111.86,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 122.16,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 132.18,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 142.48,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 152.54,
-                    "content": "4: 1611 IOP10000T"
-                },
-                {
-                    "time": 162.7,
-                    "content": "4: 1614 IOP10000T"
-                },
-                {
-                    "time": 172.83,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 182.87,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 193.19,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 203.22,
-                    "content": "4: 1614 IOP10000T"
-                },
-                {
-                    "time": 213.52,
-                    "content": "4: 1616 IOP10000T"
-                },
-                {
-                    "time": 223.67,
-                    "content": "4: 1616 IOP10000T"
-                },
-                {
-                    "time": 233.7,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 244.0,
-                    "content": "4: 1614 IOP10000T"
-                },
-                {
-                    "time": 254.3,
-                    "content": "4: 1614 IOP10000T"
-                },
-                {
-                    "time": 264.38,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 274.45,
-                    "content": "4: 1615 IOP10000T"
-                },
-                {
-                    "time": 284.48,
-                    "content": "4: 1614 IOP10000T"
-                },
-                {
-                    "time": 294.8,
-                    "content": "4: 1615 IOP10000T"
-                }
-            ]
-        }
-    },
-    {
         "command": "cpubench &\n iobench &\n iobench &",
         "output": {
             "iobench6": [
@@ -1710,6 +1347,369 @@
                 {
                     "time": 293.42,
                     "content": "4: 1065 KFLOP10000T"
+                }
+            ]
+        }
+    },
+    {
+        "command": "iobench &\n cpubench &\n cpubench &",
+        "output": {
+            "cpubench6": [
+                {
+                    "time": 0.0,
+                    "content": "6: 541 KFLOP10000T"
+                },
+                {
+                    "time": 10.39,
+                    "content": "6: 537 KFLOP10000T"
+                },
+                {
+                    "time": 20.74,
+                    "content": "6: 540 KFLOP10000T"
+                },
+                {
+                    "time": 40.5,
+                    "content": "6: 536 KFLOP10000T"
+                },
+                {
+                    "time": 50.56,
+                    "content": "6: 538 KFLOP10000T"
+                },
+                {
+                    "time": 51.73,
+                    "content": "6: 537 KFLOP10000T"
+                },
+                {
+                    "time": 70.92,
+                    "content": "6: 538 KFLOP10000T"
+                },
+                {
+                    "time": 72.41,
+                    "content": "6: 540 KFLOP10000T"
+                },
+                {
+                    "time": 82.77,
+                    "content": "6: 538 KFLOP10000T"
+                },
+                {
+                    "time": 93.08,
+                    "content": "6: 540 KFLOP10000T"
+                },
+                {
+                    "time": 103.43,
+                    "content": "6: 539 KFLOP10000T"
+                },
+                {
+                    "time": 113.76,
+                    "content": "6: 539 KFLOP10000T"
+                },
+                {
+                    "time": 124.1,
+                    "content": "6: 539 KFLOP10000T"
+                },
+                {
+                    "time": 134.42,
+                    "content": "6: 539 KFLOP10000T"
+                },
+                {
+                    "time": 144.75,
+                    "content": "6: 537 KFLOP10000T"
+                },
+                {
+                    "time": 155.11,
+                    "content": "6: 530 KFLOP10000T"
+                },
+                {
+                    "time": 165.45,
+                    "content": "6: 533 KFLOP10000T"
+                },
+                {
+                    "time": 175.77,
+                    "content": "6: 541 KFLOP10000T"
+                },
+                {
+                    "time": 186.11,
+                    "content": "6: 539 KFLOP10000T"
+                },
+                {
+                    "time": 196.44,
+                    "content": "6: 537 KFLOP10000T"
+                },
+                {
+                    "time": 206.77,
+                    "content": "6: 539 KFLOP10000T"
+                },
+                {
+                    "time": 217.11,
+                    "content": "6: 533 KFLOP10000T"
+                },
+                {
+                    "time": 227.43,
+                    "content": "6: 538 KFLOP10000T"
+                },
+                {
+                    "time": 237.76,
+                    "content": "6: 538 KFLOP10000T"
+                },
+                {
+                    "time": 248.09,
+                    "content": "6: 539 KFLOP10000T"
+                },
+                {
+                    "time": 258.44,
+                    "content": "6: 534 KFLOP10000T"
+                },
+                {
+                    "time": 268.77,
+                    "content": "6: 536 KFLOP10000T"
+                },
+                {
+                    "time": 279.09,
+                    "content": "6: 537 KFLOP10000T"
+                },
+                {
+                    "time": 289.43,
+                    "content": "6: 540 KFLOP10000T"
+                },
+                {
+                    "time": 299.76,
+                    "content": "6: 539 KFLOP10000T"
+                }
+            ],
+            "cpubench8": [
+                {
+                    "time": 10.12,
+                    "content": "8: 727 KFLOP10000T"
+                },
+                {
+                    "time": 20.29,
+                    "content": "8: 722 KFLOP10000T"
+                },
+                {
+                    "time": 30.38,
+                    "content": "8: 724 KFLOP10000T"
+                },
+                {
+                    "time": 31.07,
+                    "content": "8: 722 KFLOP10000T"
+                },
+                {
+                    "time": 41.4,
+                    "content": "8: 723 KFLOP10000T"
+                },
+                {
+                    "time": 60.85,
+                    "content": "8: 725 KFLOP10000T"
+                },
+                {
+                    "time": 62.11,
+                    "content": "8: 724 KFLOP10000T"
+                },
+                {
+                    "time": 81.07,
+                    "content": "8: 727 KFLOP10000T"
+                },
+                {
+                    "time": 91.19,
+                    "content": "8: 725 KFLOP10000T"
+                },
+                {
+                    "time": 101.28,
+                    "content": "8: 722 KFLOP10000T"
+                },
+                {
+                    "time": 111.41,
+                    "content": "8: 726 KFLOP10000T"
+                },
+                {
+                    "time": 121.52,
+                    "content": "8: 726 KFLOP10000T"
+                },
+                {
+                    "time": 131.61,
+                    "content": "8: 724 KFLOP10000T"
+                },
+                {
+                    "time": 141.72,
+                    "content": "8: 725 KFLOP10000T"
+                },
+                {
+                    "time": 151.85,
+                    "content": "8: 722 KFLOP10000T"
+                },
+                {
+                    "time": 162.14,
+                    "content": "8: 715 KFLOP10000T"
+                },
+                {
+                    "time": 172.35,
+                    "content": "8: 717 KFLOP10000T"
+                },
+                {
+                    "time": 182.43,
+                    "content": "8: 724 KFLOP10000T"
+                },
+                {
+                    "time": 192.54,
+                    "content": "8: 725 KFLOP10000T"
+                },
+                {
+                    "time": 202.67,
+                    "content": "8: 723 KFLOP10000T"
+                },
+                {
+                    "time": 212.79,
+                    "content": "8: 725 KFLOP10000T"
+                },
+                {
+                    "time": 223.01,
+                    "content": "8: 716 KFLOP10000T"
+                },
+                {
+                    "time": 233.12,
+                    "content": "8: 723 KFLOP10000T"
+                },
+                {
+                    "time": 243.25,
+                    "content": "8: 725 KFLOP10000T"
+                },
+                {
+                    "time": 253.36,
+                    "content": "8: 725 KFLOP10000T"
+                },
+                {
+                    "time": 263.55,
+                    "content": "8: 721 KFLOP10000T"
+                },
+                {
+                    "time": 273.73,
+                    "content": "8: 721 KFLOP10000T"
+                },
+                {
+                    "time": 283.86,
+                    "content": "8: 723 KFLOP10000T"
+                },
+                {
+                    "time": 293.96,
+                    "content": "8: 724 KFLOP10000T"
+                }
+            ],
+            "iobench4": [
+                {
+                    "time": 10.32,
+                    "content": "4: 1614 IOP10000T"
+                },
+                {
+                    "time": 20.4,
+                    "content": "4: 1614 IOP10000T"
+                },
+                {
+                    "time": 30.45,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 40.54,
+                    "content": "4: 1614 IOP10000T"
+                },
+                {
+                    "time": 50.67,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 60.91,
+                    "content": "4: 1616 IOP10000T"
+                },
+                {
+                    "time": 70.97,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 81.21,
+                    "content": "4: 1614 IOP10000T"
+                },
+                {
+                    "time": 91.5,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 101.56,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 111.86,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 122.16,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 132.18,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 142.48,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 152.54,
+                    "content": "4: 1611 IOP10000T"
+                },
+                {
+                    "time": 162.7,
+                    "content": "4: 1614 IOP10000T"
+                },
+                {
+                    "time": 172.83,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 182.87,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 193.19,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 203.22,
+                    "content": "4: 1614 IOP10000T"
+                },
+                {
+                    "time": 213.52,
+                    "content": "4: 1616 IOP10000T"
+                },
+                {
+                    "time": 223.67,
+                    "content": "4: 1616 IOP10000T"
+                },
+                {
+                    "time": 233.7,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 244.0,
+                    "content": "4: 1614 IOP10000T"
+                },
+                {
+                    "time": 254.3,
+                    "content": "4: 1614 IOP10000T"
+                },
+                {
+                    "time": 264.38,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 274.45,
+                    "content": "4: 1615 IOP10000T"
+                },
+                {
+                    "time": 284.48,
+                    "content": "4: 1614 IOP10000T"
+                },
+                {
+                    "time": 294.8,
+                    "content": "4: 1615 IOP10000T"
                 }
             ]
         }
