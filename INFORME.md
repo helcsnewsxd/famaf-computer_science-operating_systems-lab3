@@ -482,7 +482,7 @@ Tambien se desconocia que es lo que pasa exactamente cuanto se presiona una comb
 #### Solucion
 Para ello hizo falta investigar que es lo que pasa de fondo cuando apretamos una combinacion de teclas.
 
-En el caso de `ctrl-p`, se envia el caracter ASCII numero 16 (Data Link Escape), el cual es un caractér de control.
+En el caso de `ctrl-p`, se envia el caracter ASCII numero 16 (Data Link Escape), el cual es un carácter de control.
 
 Por ende, para solucionar el problema bastó con enviar el caracter ASCII numero 16 por STDIN a xv6.
 
