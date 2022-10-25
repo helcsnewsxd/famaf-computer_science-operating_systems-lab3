@@ -312,7 +312,7 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 
 ## Análisis y gráficos de interes
 
-Aclaración: La escala de los gráficos es logarítmica ya que de otra manera, habia gran cantidad de datos que era imposibles de verlos hasta usando una lupa.
+Aclaración: La escala de los gráficos es logarítmica ya que en escala lineal hay gran cantidad de datos que son imposibles de verlos hasta usando una lupa.
 
 ![](graphs/iobench_i512400f_RRvsMLFQ.png)
 
@@ -334,44 +334,49 @@ _Comparación entre el desempeño de los procesos CPU-bond en el planificador ML
 
 ### Análisis de los diferentes tamaños de quantums
 
-- En el **caso 0** se observa que el mejor escenario para los proceso IO-bond es el **escenario 1**, teniendo resultados ligeramente mejores que los de los **escenarios 0 y 2**. El **escenario 3** da el peor desempeño, debido a lo corto de su quantum, que lo vuelve inviable.
+- En el **caso 0** se observa que el mejor escenario para los proceso IO-bond ejecutados de manera solitaria es el **escenario 1**, teniendo resultados ligeramente mejores que los de los **escenarios 0 y 2**. El **escenario 3** da el peor desempeño, debido a lo corto de su quantum. que lo vuelve inviable ya que se pierde mucho desempeño
 
-- En el **caso 1** se observa que se cumplió la hipótesis de que menor quantum implica peor desempeño para los procesos CPU-bond, esto porque mientras más largo el quantum, menor cantidad de tiempo se lo pasa el SO haciendo context switch.
+- En el **caso 1** se observa que se cumplió la hipótesis de que menor quantum implica peor desempeño para los procesos CPU-bond, esto porque mientras más largo el quantum, menor cantidad de tiempo se lo pasa el SO haciendo context switch. El caso más extremo es en el procesador celeron n4000, donde siempre que se utilizo el quantum del **escenario 3**, los procesos CPU-bond no llegaron a realizar ninguna operación.
 
-- En todos los casos, aunque se ve en particular reflejado en el **caso 0 y 1**, el **escenario 3** dio un desempeño lamentable, adectando sobre todo a los procesos CPU-bond al punto de volverlos inutilizables, pero tampoco ayudando demasiado a los procesos IO-bond. Esto puede deberse a que al implementar un quantum tan pequeño, el SO gasta más tiempo realizando los context switch que realmente ejecutando procesos.
+- En todos los casos, aunque se ve en particular reflejado en el **caso 0 y 1** de RR, el **escenario 3** dio un desempeño lamentable, afectando sobre todo a los procesos CPU-bond al punto de volverlos inutilizables, pero tampoco ayudando demasiado a los procesos IO-bond. Esto puede deberse a que al implementar un quantum tan pequeño, el SO gasta más tiempo realizando los context switch que realmente ejecutando procesos.
 
-- En el **caso 2**, al ejecutar en paralelo un proceso IO-bound y CPU-bound, ambos procesos bajan su desempeño como es de esperar. Los quantums más grandes (**escenario 0 y 1**) hacen que el proceso CPU-bound tenga una disminución de desempeño mínima, pero el proceso IO-bound pierde muchisimo desempeño, y los quantums más pequeños (**escenario 2 y 3**) implica mayor equilibrio en la baja de desempeño de cada proceso (Es decir, ambos procesos disminuyen su desempeño en un porcentaje similar comparando con las mediciones de los **casos 1 y 2**)
+- En el **caso 2**, al ejecutar en paralelo un proceso IO-bound y CPU-bound, ambos procesos bajan su desempeño como es de esperar. Los quantums más grandes, como el del **escenario 0**), hacen que el proceso CPU-bound tenga una disminución de desempeño mínima, pero el proceso IO-bound pierde muchisimo desempeño, y los quantums más pequeños (**escenario 2 y 3**) implican que el proceso IO-bond no pierda tanto desempeño pero que el proceso CPU-bond se vea más perjudicado (Comparando con las mediciones de los **casos 0 y 1**)
 
-- En los casos donde se ejecutan procesos IO-bond junto con CPU-bond (**casos 2,5,6 y7**), el escenario más beneficioso para los procesos IO-bond es generalmente el **escenario 3**, y el más beneficioso para los procesos CPU-bond es generalmente el **escenario 1**, apoyando la hipótesis dicha anteriormente. Sin embargo, varia un poco entre el planificador RR y MLFQ y no es absoluto, ya que en algunos casos el **escenario 2** es más beneficioso que el **escenario 3** para los procesos IO-bond.
+- En los casos donde se ejecutan procesos IO-bond junto con CPU-bond (**casos 2,5,6 y 7**), el escenario más beneficioso para los procesos IO-bond es generalmente el **escenario 3**, y el más beneficioso para los procesos CPU-bond es generalmente el **escenario 0**, apoyando la hipótesis dicha anteriormente. Sin embargo, varia un poco entre el planificador RR y MLFQ y no es absoluto, ya que en algunos casos el **escenario 2** es más beneficioso que el **escenario 3** para los procesos IO-bond.
 
 - Todas las conclusiones anteriores aplican tanto para el planificador RR como para el MLFQ sin priority boost, ya que los resultados entre ambos planificadores no tienen grandes variaciones.
 
+- Si tuvieramos que seleccionar nuestro quantum ideal para RR, según los experimentos realizados elegiriamos el quantum del **escenario 1**, porque es el más equilibrado según observamos. Beneficia más a los procesos IO-bond que el **escenario 0** y un escenario con quantum más corto reduciría mucho la cantidad de operaciones de los procesos CPU-bond, sobre todo en los procesadores menos potentes (Como el celeron N4000)
+
+- Si tuvieramos que seleccionar nuestro quantum ideal para MLFQ sin priority boost, según los experimentos realizados elegiriamos el quantum del **escenario 1**, porque es el más equilibrado según observamos. Beneficia más a los procesos IO-bond que el **escenario 0**, los cuales ya por el planificador MLFQ se ven bastante más beneficiados que en RR, y un escenario con quantum más corto reduciría mucho la cantidad de operaciones de los procesos CPU-bond, sobre todo en los procesadores menos potentes (Como el celeron N4000)
 
 ### Análisis del desempeño de los procesos al realizar time-sharing
 
 - El funcionamiento del **caso 2** ya fue explicado en la sección anterior
 
-- En el **caso 3** se observa que al ejecutar 2 procesos IO-bond en paralelo, el desempeño de cada proceso es similar a si cada proceso se ejecutara solo en el CPU. Esto se debe a que al hacer las peticiones de IO se van turnando los procesos, y el tiempo que un proceso espera el otro lo aprovecha para realizar cosas en el CPU.
+- En el **caso 3** se observa que al ejecutar 2 procesos IO-bond en paralelo, el desempeño de cada proceso es similar a si cada proceso se ejecutara solo en el CPU. Esto se debe a que al hacer las peticiones de IO se van turnando los procesos, y el tiempo que un proceso espera el otro lo aprovecha para realizar cosas en el CPU. El desempeño de este caso no depende casi nada del CPU, ya que las pruebas hechas con el i5 y con el intel Celeron dan resultados bastante similares.
 
-- En el **caso 4** se observa que al ejecutar 2 procesos CPU-bound en paralelo, el desempeño de cada proceso baja a la mitad (Respecto al desempeño al ejecutarse solo, en el **caso 1**).
+- En el **caso 4** se observa que al ejecutar 2 procesos CPU-bound en paralelo, el desempeño de cada proceso baja a la mitad (Respecto al desempeño al ejecutarse un solo proceso individual, en el **caso 1**).
 
+- En el **caso 5** se observa que al ejecutar un proceso CPU-bound en paralelo con 2 procesos IO-bound, el desempeño del proceso CPU-bound es similar a que si se ejecutara con un solo proceso IO-bound en paralelo. Los procesos IO-bound tienen problemas para ejecutarse en simultaneo junto con el proceso CPU-bound, y creemos que uno de los 2 procesos sufre starvation en los escenarios más bajos. Una vez ambos procesos IO-bond nos devuelven mediciones con las cuales poder trabajar, se observa que el desempeño de cada proceso IO-bond es la mitad del desempeño que tendría si se ejecutará un proceso CPU-bond en paralelo con un solo proceso IO-bond (**caso 2**) en el caso del procesador i5 12400f. En el caso del celeron n4000 no se ve que exista tanta diferencia entre el desempeño de los procesos IO-bond del **caso 2** y el **caso 5**. La disminución de desempeño de los procesos IO-bond sucede porque a comparación del **caso 3**, acá los tiempos de espera de IO los aprovecha sobre todo el proceso CPU-bond y una vez obtiene el control del CPU no lo suelta hasta finalizar su quantum (En el **caso 2**, los procesos al ser ambos IO-bond iban soltando el control del CPU de manera alternada y nadie "acaparaba" el uso del CPU).
 
-- En el **caso 5** se observa que al ejecutar un proceso CPU-bound en paralelo con 2 procesos IO-bound, el desempeño del proceso CPU-bound es similar a que si se ejecutara con un solo proceso IO-bound en paralelo. Los procesos IO-bound tienen problemas para ejecutarse en simultaneo junto con el proceso CPU-bound, y creemos que uno de los 2 procesos sufre starvation en los **escenarios 0 y 1**. Una vez ambos procesos IO-bond nos devuelven mediciones con las cuales poder trabajar, se observa que el desempeño de cada proceso IO-bond es la mitad del desempeño que tendría si se ejecutará un proceso CPU-bond en paralelo con un solo proceso IO-bond (**caso 2**). Esto se debe a que, a comparación del **caso 3**, acá los tiempos de espera de IO los aprovecha sobre todo el proceso CPU-bond y una vez obtiene el control del CPU no lo suelta hasta finalizar su quantum (En el **caso 2**, los procesos al ser ambos IO-bond iban soltando el control del CPU de manera alternada y nadie "acaparaba" el uso del CPU).
-
-- En el **caso 6**: Al ejecutar un proceso IO-bound en paralelo con 2 procesos CPU-bound, el desempeño del proceso IO-bound es similar a que si se ejecutara en paralelo con 1 solo proceso CPU-bound (**caso 2**). Los procesos CPU-bound tienen un desempeño similar a cuando se ejecutan en paralelo pero sin el proceso IO-bound (**caso 4**).
+- En el **caso 6**: Al ejecutar un proceso IO-bound en paralelo con 2 procesos CPU-bound, los procesos CPU-bound tienen un desempeño similar a cuando se ejecutan en paralelo pero sin el proceso IO-bound (**caso 4**). El desempeño del proceso IO-bound disminuye un poco al valor de si se ejecutara en paralelo con 1 solo proceso CPU-bound (**caso 2**). 
 
 - **Caso 7**: Al ejecutar 2 procesos IO-bound en paralelo con 2 procesos CPU-bound, los 2 procesos CPU-bound tienen un desempeño similar a cuando se ejecutan en paralelo pero sin los procesos IO-bound (**caso 4**). Los procesos IO-bound tienen menor desempeño que si solo se ejecutara un proceso IO-bound (**caso 6**).
 
-- Para los análisis anteriores se usaron sobre todo los **escenarios 0, 1 y 2**, ya que el **escenario 3** al tener un quantum tan pequeño genera ciertas mediciones extrañas, además de que no consideramos que sea viable querer utilizar XV6 con un planificador que tenga el quantum así de pequeño.
+- Para los análisis anteriores se usaron sobre todo los **escenarios 0, 1 y 2**, ya que el **escenario 3** al tener un quantum tan pequeño genera ciertas mediciones extrañas, además de que luego de todas las mediciones no consideramos que sea viable querer utilizar XV6 con un planificador que tenga el quantum así de pequeño.
+
+- Para los análisis anteriores nos basamos sobre todo en las mediciones del procesador i5 12400f en aquellas situaciones donde existia una gran diferencia entre los resultados dados por las mediciones de los procesadores.
+
 
 ### Comparación MLFQ vs RR
 - En los casos básicos (**casos 0, 1, 2, 3 y 4**) no se ve gran diferencia entre los resultados de los planificadores MLFQ y RR.
-- En los casos opcionales (**casos 5, 6 y 7**) si se ve una mayor diferencia, aunque tampoco es muy grande. En esos casos opcionales se ve que los procesos IO-bond tienen una mejor respuesta y desempeño sin que los procesos CPU-bond se vean muy perjudicados, mostrando que el SO los ejecuta mayor cantidad de veces, priorizandolos frente a los procesos CPU-bond y generando un contraste con el planificador RR.
+- En los casos opcionales (**casos 5, 6 y 7**) si se ve una mayor diferencia, aunque tampoco es muy grande. En esos casos opcionales se ve que los procesos IO-bond tienen una mejor respuesta y desempeño sin que los procesos CPU-bond se vean muy perjudicados, mostrando que el SO los ejecuta mayor cantidad de veces, priorizandolos frente a los procesos CPU-bond y generando un contraste con el planificador RR. Eso puede significar que la mayor diferencia de desempeño entre el planificador MLFQ y RR se presenta al trabajar con una gran cantidad de procesos, como sucede en el día a día de un SO. La mayor parte de nuestras mediciones hechas en los casos de prueba fueron con poca cantidad y eso puede haber propiciado que no exista tanta diferencia entre las mediciones.
+- La estructura de las mediciones en ambos equipos es bastante similar, y en ambas se ve reflejado como los procesos IO-bond se benefician de la implementación del planificador MLFQ.
 
 
-## Conclusiones
-- a
-- a
-- a
-- a
-- a
+# Conclusiones
+- Se corrobora la hipótesis de que un quantum mayor significa mejor desempeño para los procesos CPU-bond y un quantum más chico mejora el desempeño de los procesos IO-bond (siempre y cuando el quantum no sea demasiado chico).
+- Un quantum demasiado chico no ayuda a ningún tipo de proceso, perjudica a todos y obliga al SO a realizar demasiados context switch.
+- El quantum por defecto en XV6 es demasiado grande y por lo tanto perjudica a los procesos IO-bond. El quantum ideal (desde nuestro punto de vista) seria el utilizado en el **escenario 1**
+- La mayor diferencia de rendimiento entre el procesador MLFQ y RR se presenta cuando aumentamos la cantidad de procesos que el SO debe planificar (**casos 5, 6, 7**)
