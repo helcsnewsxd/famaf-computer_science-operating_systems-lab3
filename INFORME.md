@@ -158,28 +158,11 @@ De igual modo, cabe aclarar, el quantum es de 1000000 ciclos ya que el tiempo "r
 
 ### ¿Cuánto dura un cambio de contexto en xv6? ¿El cambio de contexto consume tiempo de un quantum?
 
-Como se ha hablado anteriormente, el cambio de contexto se realiza en [swtch.S](/kernel/swtch.S) bajo la función del mismo nombre, donde simplemente se guardan los registros del *old context* (el del proceso que dejó la CPU) y se cargan los del *new context* (nuevo proceso que se carga en la CPU). La cantidad de instrucciones ejecutadas por el procesador (guardado y cargado del estado de los procesos) son 28.
-Como puede visualizarse en la siguiente imagen, el hacer el context switch durante la ejecución del cpubench e iobench de forma paralela (`cpubench &; iobench &`) tarda algunos ciclos de reloj produciendo, a veces, el aumento de un tick de reloj (lo que implica que el quantum terminó y comienza otro):
-![](/Figures/Ticks-de-reloj-del-context-switch.png)
-
-Esto se ha obtenido modificando levemente el scheduler en la parte en la que se hace el switcheo:
-```c
-uint inixticks; // ticks anteriores al switch
-acquire(&tickslock);
-inixticks = ticks;
-release(&tickslock);
-
-swtch(&c->context, &p->context);
-
-uint finxticks; // ticks posteriores al switch
-acquire(&tickslock);
-finxticks = ticks;
-release(&tickslock);
-
-printf("ACTUAL TICK DE RELOJ:\n   Ini --> %d\n   Fin --> %d\n   Diff --> %d\n-------------------\n",inixticks,finxticks,finxticks-inixticks);
-```
+Como se ha hablado anteriormente, el cambio de contexto se realiza en [swtch.S](/kernel/swtch.S) bajo la función del mismo nombre, donde simplemente se guardan los registros del *old context* (el del proceso que dejó la CPU) y se cargan los del *new context* (nuevo proceso que se carga en la CPU). La cantidad de instrucciones ejecutadas por el procesador (guardado y cargado del estado de los procesos) son 28, lo cual implica un consumo, aunque ínfimo, de tiempo en la realización del context switch.
 
 Finalmente, y respondiendo a la segunda pregunta, el cambio de contexto sí consume tiempo de un quantum ya que este es asignado como interrupción de forma global al SO y no a un proceso en particular (como se mencionó anteriormente).
+
+Un ejemplo es la ejecución de dos procesos en paralelo (`iobench & ; cpubench &`) de tal modo que primero sea scheduleado `iobench` y, cuando este quede bloqueado, se haga el context switch para cpubench. En este caso, este cambio de contexto consume tiempo del quantum global asignado al SO.
 
 ### ¿Hay alguna forma de que a un proceso se le asigne menos tiempo?
 
