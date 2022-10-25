@@ -486,6 +486,13 @@ En el caso de `ctrl-p`, se envia el caracter ASCII numero 16 (Data Link Escape),
 
 Por ende, para solucionar el problema bastó con enviar el caracter ASCII numero 16 por STDIN a xv6.
 
+### Implementación MLFQ sin producirse starvation
+Algo que no fue tanto un "problema", si no llamó la atención durante el desarrollo de la cuarta parte del proyecto, fue que en la implementación del planificador MLFQ sin priority boost, no se producía starvation cuando se disminuía el quantum. 
+
+Todo se desprendió cuando observamos que la terminal tardaba en responder cuando se llamaba a ```ls``` luego de haber llamado a ```iobench &; iobench &; iobench &; iobench &; iobench &; iobench &; cpubench &``` (en el caso de RR y MLFQ). Para ello, lo que se hizo fue disminuir el quantum a un cuarto, entonces la terminal comenzó a responder inmediatamente. Sin embargo, cuando hicimos esto, inesperadamente observamos que no se producía starvation.
+
+Debido a esto, se pensó cual podría ser la razón y se concluyó que era más que nada porque cuando está por terminar un quantum, por más poco tiempo que falte, el cpubench de igual manera aprovecha lo que reste del mismo.
+
 ## *Comunicación*
 La comunicación se basó fuertemente en plataformas como [Discord](https://discord.com/), donde la comunicación es más organizada y se pueden hacer llamadas de voz, y [Telegram](https://telegram.org/), donde conseguimos una comunicación más veloz e informal. 
 
