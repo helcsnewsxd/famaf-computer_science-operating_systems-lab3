@@ -169,7 +169,7 @@ Un ejemplo es la ejecución de dos procesos en paralelo (`iobench & ; cpubench &
 Tal y como se mostró en las respuestas a las preguntas anteriores, más específicamente a la primera, el quantum es asignado mediante un timer interrupt al SO de forma global, no de forma particular a cada proceso. Motivo de esto, puede suceder que un proceso termine antes de la finalización del quantum, por lo que el siguiente elegido por el scheduler va a tener un tiempo menor asignado (el faltante) ya que comienza con el tiempo ya transcurrido.
 
 ## Segunda Parte
-En esta segunda parte del laboratorio, nos centramos en cuantificar el rendimiento del planificador con respecto a procesos CPU-bound e IO-bound. Realizamos mediciones y comparaciones entre el planificador por default en xv6, y el implementado (MLFQ). Las mediciones y sus conlusiones se pueden leer en el siguiente apartado: [**Mediciones**](/Figures/Graphs/analisis_mediciones.md)
+En esta segunda parte del laboratorio, nos centramos en cuantificar el rendimiento del planificador con respecto a procesos CPU-bound e IO-bound. Realizamos mediciones y comparaciones entre el planificador por default en xv6, y el implementado (MLFQ). Las mediciones y sus conlusiones se pueden leer en el siguiente apartado: [**Mediciones**](Analisis_mediciones.md)
 
 ## Tercera Parte
 Aquí se comenzó a repensar el planificador de xv6 para que su funcionamiento se dicte por una ejecución prioritaria de los procesos, es decir, implementando un planificador MLFQ. Previo a esta implementación, en esta parte se introdujeron algunas variables y campos necesarios para su correcto funcionamiento.
