@@ -433,6 +433,10 @@ y luego sigue con la ejecución normal del scheduler, deslockeando luego la tabl
 
 **IMPORTANTE**: debido a que los ticks en el scheduler se repiten (porque no todos vienen desde yield), se decidió usar la variable global `antboost` en donde va a estar el valor del tick en el que se realizó el anterior priority boost y usarlo como condición en el condicional. Esto permite que se haga una sola vez esta acción cada `NBOOST` ticks.
 
+### ¿Se puede producir starvation en el nuevo planificador? 
+Teniendo en cuenta que hemos implementado el priority boost, no se produce starvation en el nuevo planificador que hemos implementado (MLFQ). 
+
+Sin embargo, hicimos pruebas durante la implementación del nuevo planificador y descubrimos que aunque aún no hubiesemos implementado el priority boost, aún así el planificador no sufria de starvation. Para más información revisar la sección de *Problemas* más adelante en el informe.
 
 # Herramientas de Programación
 Las principales herramientas utilizadas por el grupo en la implementación y división del proyecto fueron las siguientes:
