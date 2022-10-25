@@ -24,6 +24,9 @@ Todos los casos en los distintos escenarios se ejecutan durante 5 minutos en dos
 
 En cada caso, las mediciones de cada proceso se promediaran para luego analizarse.
 
+Para realizar y almacenar todas las mediciones, utilizaremos el script de python `run_experiments.py`. Para obtener el promedio de cada medición utilizamos `averages.py` y finalmente para realizar los gráficos con la información relevante se utiliza el script de python `graph.py`.
+
+
 
 ### Casos
 - **Caso 0**: 1 iobench solo. En este caso queremos investigar como se comporta un solo proceso iobench corriendo solo (sin otros procesos en paralelo) en xv6.
