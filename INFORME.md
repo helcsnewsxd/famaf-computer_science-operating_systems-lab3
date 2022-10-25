@@ -430,6 +430,24 @@ y luego sigue con la ejecución normal del scheduler, deslockeando luego la tabl
 # Herramientas de Programación
 Las principales herramientas utilizadas por el grupo en la implementación y división del proyecto fueron las siguientes:
 
+## Scripts
+### run_experiments.py
+Script que corre un comando dado por el usuario dentro de xv6 y captura el output por una determinada cantidad de tiempo.
+
+Produce un archivo json con el output que haya emitido xv6, separando el output segun si vino de `iobench` o `cpubench` y tambien guarda el tiempo en el que se capturó dicho output.
+
+Tambien tiene la capacidad de enviar la combinacion de teclas `ctrl-p` para producir un procdump cada cierto intervalo de tiempo.
+
+Este script se uso para correr todos los experimentos de este laboratorio.
+
+### graph.py
+Script que usa la libreria `matplotlib` para generar graficos en base a los datos de los experimentos.
+
+### averages.py
+Script que calcula el promedio de operaciones IO y de operaciones del cpu usando los datos de los experimentos como input
+
+Se creo como herramienta para ayudar en el desarrollo del informe.
+
 ## *Material teórico de estudio y preparación*
 
  - [**Operating Systems: Three Easy Pieces**: Process virtualization](https://pages.cs.wisc.edu/~remzi/OSTEP/), principalmente el capítulo número 5 (*Process API*) y los capitulos de la sección de Concurrencia, sobre todo el capítulo número 31 (*Semaphores*), junto con las secciones de *Homework Simulation* y *Homework Code* de cada uno de esos capitulos.
