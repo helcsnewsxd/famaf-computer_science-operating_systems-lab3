@@ -5,16 +5,16 @@ import json, os
 
 SCHEDULERS = [
     [
-        "./experiments/i5_12400f/experiments_RR_escenario0.json",
-        "./experiments/i5_12400f/experiments_RR_escenario1.json",
-        "./experiments/i5_12400f/experiments_RR_escenario2.json",
-        "./experiments/i5_12400f/experiments_RR_escenario3.json",
+        "./experiments/celeron_n4000/experiments_RR_escenario0.json",
+        "./experiments/celeron_n4000/experiments_RR_escenario1.json",
+        "./experiments/celeron_n4000/experiments_RR_escenario2.json",
+        "./experiments/celeron_n4000/experiments_RR_escenario3.json",
     ],
     [
-        "./experiments/i5_12400f/experiments_MLFQ_escenario0.json",
-        "./experiments/i5_12400f/experiments_MLFQ_escenario1.json",
-        "./experiments/i5_12400f/experiments_MLFQ_escenario2.json",
-        "./experiments/i5_12400f/experiments_MLFQ_escenario3.json",
+        "./experiments/celeron_n4000/experiments_MLFQ_escenario0.json",
+        "./experiments/celeron_n4000/experiments_MLFQ_escenario1.json",
+        "./experiments/celeron_n4000/experiments_MLFQ_escenario2.json",
+        "./experiments/celeron_n4000/experiments_MLFQ_escenario3.json",
     ],
 ]
 
@@ -63,7 +63,7 @@ def show_graph():
 def save_fig_to_path(path):
 
     change_plot_visuals()
-    plt.xlim([None, 1000000])
+    plt.xlim([None, 100000])
     plt.savefig(path, dpi=400, bbox_inches="tight")
     plt.close()
 

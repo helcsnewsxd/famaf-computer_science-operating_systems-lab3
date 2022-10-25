@@ -1,10 +1,10 @@
 import json, pprint
 
 JSON_FILES = [
-    "./experiments/i5_12400f/experiments_RR_escenario0.json",
-    "./experiments/i5_12400f/experiments_RR_escenario1.json",
-    "./experiments/i5_12400f/experiments_RR_escenario2.json",
-    "./experiments/i5_12400f/experiments_RR_escenario3.json",
+        "./experiments/celeron_n4000/experiments_MLFQ_escenario0.json",
+        "./experiments/celeron_n4000/experiments_MLFQ_escenario1.json",
+        "./experiments/celeron_n4000/experiments_MLFQ_escenario2.json",
+        "./experiments/celeron_n4000/experiments_MLFQ_escenario3.json",
 ]
 
 

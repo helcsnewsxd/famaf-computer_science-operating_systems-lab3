@@ -86,7 +86,7 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 | Prom. de ops IO (proc. A) en intervalo  | 161.06 | 332.77 | 1711.52 | 3301.78 |
 | Prom. de ops IO (proc. B) en intervalo  | - | - | 1648.3 | 3181.82 |
 
-*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición (Nuestra hipótesis es que el proceso en cuestión sufrió de starvation por culpa de las llamadas a IO)
+*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición
 
 ### Caso 6: 1 iobench con 2 cpubench
 
@@ -106,7 +106,7 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 | Prom. de ops CPU (proc. A) en intervalo | 79557.67 | 7728.93 | 718.34 | 5.0 |
 | Prom. de ops CPU (proc. B) en intervalo | 79732.38 | 7929.59 | 534.17 | 4.0 |
 
-*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición (Nuestra hipótesis es que el proceso en cuestión sufrió de starvation por culpa de las llamadas a IO)
+*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición
 
 ## Mediciones MLFQ sin priority boost (i5 12400f)
 
@@ -153,7 +153,7 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 | Prom. de ops IO (proc. A) en intervalo  | 32.8 | 334.85 | 1741.19 | 3330.36 |
 | Prom. de ops IO (proc. B) en intervalo  | - | - | 1787.36 | 3336.71 |
 
-*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición (Nuestra hipótesis es que el proceso en cuestión sufrió de starvation por culpa de las llamadas a IO)
+*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición
 
 ### Caso 6: 1 iobench con 2 cpubench
 
@@ -173,21 +173,163 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 | Prom. de ops CPU (proc. A) en intervalo | 79718.9 | 7731.73 | 542.76 | 4.53 |
 | Prom. de ops CPU (proc. B) en intervalo | 79867.9 | 7710.17 | 544.24 | 4.0 |
 
-*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición (Nuestra hipótesis es que el proceso en cuestión sufrió de starvation por culpa de las llamadas a IO)
+*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición
 
+## Mediciones RR (celeron n4000)
+
+### Caso 0: 1 iobench solo
+
+| Escenario                    | 0 | 1 | 2 | 3 |
+|------------------------------|---|---|---|---|
+| Prom. de ops IO en intervalo |4146.67|4378.9|3542.7|198.55|
+
+### Caso 1: 1 cpubench solo
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops CPU en intervalo | 30514.9 | 2980.0 | 216.47 | 0.0 |
+
+### Caso 2: 1 iobench y 1 cpubench
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops CPU en intervalo | 30267.67 | 2740.07 | 51.92 | 0.0 |
+| Prom. de ops IO en intervalo  | 32.8 | 328.85 | 2597.55 | 143.52 |
+
+
+### Caso 3: 1 iobench con 1 iobench
+
+| Escenario                              | 0 | 1 | 2 | 3 |
+|----------------------------------------|---|---|---|---|
+| Prom. de ops IO (proc. A) en intervalo | 3463.41 | 3622.83 | 3413.41 | 152.74 |
+| Prom. de ops IO (proc. B) en intervalo | 3251.24 | 3776.4 | 3419.83 | 145.58 |
+
+
+### Caso 4: 1 cpubench con 1 cpubench
+
+| Escenario                               | 0 | 1 | 2 | 3 |
+|-----------------------------------------|---|---|---|---|
+| Prom. de ops CPU (proc. A) en intervalo | 15284.62 | 1491.32 | 115.11 | 0.0 |
+| Prom. de ops CPU (proc. B) en intervalo | 15267.0 | 1482.0 | 108.0 | 0.0 |
+
+### Caso 5: 1 cpubench con 2 iobench
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops CPU en intervalo | 30282.41 | 2720.83 | 65.52 | 0.0 |
+| Prom. de ops IO (proc. A) en intervalo  | 32.81 | 318.62 | 1609.62 | 54.02 |
+| Prom. de ops IO (proc. B) en intervalo  | - | 320.71 | 1504.97 | 48.87 |
+
+*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición
+
+### Caso 6: 1 iobench con 2 cpubench
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops IO en intervalo  | 16.0 | 164.96 | 1345.0 | 100.86 |
+| Prom. de ops CPU (proc. A) en intervalo | 15274.55 | 1369.45 | 104.73 | 0.0 |
+| Prom. de ops CPU (proc. B) en intervalo | 15133.79 | 1487.41 | 27.9 | 0.0 |
+
+
+### Caso 7: 1 iobench con 2 cpubench y 1 iobench
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops IO (proc. A) en intervalo  | 48.5 | 154.73 | 845.17 | 61.67 |
+| Prom. de ops IO (proc. B) en intervalo  | - | 171.07 | 1056.48 | 52.44 |
+| Prom. de ops CPU (proc. A) en intervalo | 15229.38 | 1363.97 | 100.04 | 0.0 |
+| Prom. de ops CPU (proc. B) en intervalo | 15098.79 | 1481.33 | 32.17 | 0.0 |
+
+*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición
+
+## Mediciones MLFQ sin priority boost (celeron n4000)
+
+### Caso 0: 1 iobench solo
+
+| Escenario                    | 0 | 1 | 2 | 3 |
+|------------------------------|---|---|---|---|
+| Prom. de ops IO en intervalo |4197.33|4470.07|3765.3|3258.0|
+
+### Caso 1: 1 cpubench solo
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops CPU en intervalo | 30223.33 | 2988.6 | 223.5 | 0.0 |
+
+### Caso 2: 1 iobench y 1 cpubench
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops CPU en intervalo | 30261.33 | 2749.66 | 66.68 | 0.0 |
+| Prom. de ops IO en intervalo  | 32.8 | 331.04 | 2499.31 | 1664.29 |
+
+
+### Caso 3: 1 iobench con 1 iobench
+
+| Escenario                              | 0 | 1 | 2 | 3 |
+|----------------------------------------|---|---|---|---|
+| Prom. de ops IO (proc. A) en intervalo | 3364.83 | 3496.38 | 3523.07 | 1900.5 |
+| Prom. de ops IO (proc. B) en intervalo | 2980.33 | 3312.86 | 3521.14 | 1890.0 |
+
+
+### Caso 4: 1 cpubench con 1 cpubench
+
+| Escenario                               | 0 | 1 | 2 | 3 |
+|-----------------------------------------|---|---|---|---|
+| Prom. de ops CPU (proc. A) en intervalo | 14970.37 | 1488.81 | 113.79 | 0.0 |
+| Prom. de ops CPU (proc. B) en intervalo | 14988.21 | 1495.63 | 113.9 | 0.0 |
+
+### Caso 5: 1 cpubench con 2 iobench
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops CPU en intervalo | 29685.23 | 2706.1 | 53.0 | 0.0 |
+| Prom. de ops IO (proc. A) en intervalo  | 43.0 | 328.62 | 1679.55 | 1380.83 |
+| Prom. de ops IO (proc. B) en intervalo  | - | 302.19 | 1642.86 | 1414.57 |
+
+*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición
+
+### Caso 6: 1 iobench con 2 cpubench
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops IO en intervalo  | 32.93 | 324.73 | 2086.83 | 1213.29 |
+| Prom. de ops CPU (proc. A) en intervalo | 15155.24 | 1370.31 | 47.13 | 0.0 |
+| Prom. de ops CPU (proc. B) en intervalo | 15133.79 | 1376.17 | 45.77 | 0.0 |
+
+
+### Caso 7: 1 iobench con 2 cpubench y 1 iobench
+
+| Escenario                     | 0 | 1 | 2 | 3 |
+|-------------------------------|---|---|---|---|
+| Prom. de ops IO (proc. A) en intervalo  | 32.93 | 266.38 | 1324.59 | 900.0 |
+| Prom. de ops IO (proc. B) en intervalo  | - | 256.46 | 1303.79 | 906.0 |
+| Prom. de ops CPU (proc. A) en intervalo | 15167.31 | 1368.24 | 45.82 | 0.0 |
+| Prom. de ops CPU (proc. B) en intervalo | 15138.96 | 1375.61 | 46.3 | 0.0 |
+
+*La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición
 
 
 ## Análisis y gráficos de interes
 
+Aclaración: La escala de los gráficos es logarítmica ya que de otra manera, habia gran cantidad de datos que era imposibles de verlos hasta usando una lupa.
 
-![](graphs/iobench_RRvsMLFQ.png)
+![](graphs/iobench_i512400f_RRvsMLFQ.png)
 
-_Comparación entre el desempeño de los procesos IO-bond en el planificador MLFQ y el planificador RR_
+_Comparación entre el desempeño de los procesos IO-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
 
-![](graphs/cpubench_RRvsMLFQ.png)
+![](graphs/iobench_celeronn4000_RRvsMLFQ.png)
 
-_Comparación entre el desempeño de los procesos CPU-bond en el planificador MLFQ y el planificador RR_
+_Comparación entre el desempeño de los procesos IO-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
 
+
+![](graphs/cpubench_i512400f_RRvsMLFQ.png)
+
+_Comparación entre el desempeño de los procesos CPU-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
+
+![](graphs/cpubench_celeronn4000_RRvsMLFQ.png)
+
+_Comparación entre el desempeño de los procesos CPU-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
 
 
 ### Análisis de los diferentes tamaños de quantums

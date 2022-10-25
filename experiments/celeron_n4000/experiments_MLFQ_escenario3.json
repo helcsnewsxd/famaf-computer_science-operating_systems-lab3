@@ -577,199 +577,6 @@
         }
     },
     {
-        "command": "iobench &\n cpubench &\n cpubench &",
-        "output": {
-            "other": [
-                {
-                    "time": 0.0,
-                    "content": "iobench &"
-                },
-                {
-                    "time": 0.0,
-                    "content": "cpubench &"
-                },
-                {
-                    "time": 0.0,
-                    "content": "cpubench &"
-                },
-                {
-                    "time": 87.16,
-                    "content": ""
-                },
-                {
-                    "time": 87.17,
-                    "content": "1 2 767 782 sleep  init"
-                },
-                {
-                    "time": 87.17,
-                    "content": "2 2 649 670 sleep  sh"
-                },
-                {
-                    "time": 87.17,
-                    "content": "4 0 57210 57228 runble iobench"
-                },
-                {
-                    "time": 87.17,
-                    "content": "6 0 55164 59172 runble cpubench"
-                },
-                {
-                    "time": 87.17,
-                    "content": "8 0 55152 58626 runble cpubench"
-                },
-                {
-                    "time": 87.17,
-                    "content": ""
-                },
-                {
-                    "time": 87.17,
-                    "content": "1 2 767 782 sleep  init"
-                },
-                {
-                    "time": 87.17,
-                    "content": "2 2 649 670 sleep  sh"
-                },
-                {
-                    "time": 87.17,
-                    "content": "4 0 57210 57228 runble iobench"
-                },
-                {
-                    "time": 87.17,
-                    "content": "6 0 55164 59172 runble cpubench"
-                },
-                {
-                    "time": 87.17,
-                    "content": "8 0 55152 58626 runble cpubench"
-                },
-                {
-                    "time": 174.82,
-                    "content": ""
-                },
-                {
-                    "time": 174.82,
-                    "content": "1 2 767 782 sleep  init"
-                },
-                {
-                    "time": 174.82,
-                    "content": "2 2 649 670 sleep  sh"
-                },
-                {
-                    "time": 174.82,
-                    "content": "4 0 114623 114658 runble iobench"
-                },
-                {
-                    "time": 174.82,
-                    "content": "6 0 110512 118622 runble cpubench"
-                },
-                {
-                    "time": 174.82,
-                    "content": "8 0 110711 117746 runble cpubench"
-                },
-                {
-                    "time": 174.82,
-                    "content": ""
-                },
-                {
-                    "time": 174.82,
-                    "content": "1 2 767 782 sleep  init"
-                },
-                {
-                    "time": 174.82,
-                    "content": "2 2 649 670 sleep  sh"
-                },
-                {
-                    "time": 174.82,
-                    "content": "4 0 114623 114658 runble iobench"
-                },
-                {
-                    "time": 174.82,
-                    "content": "6 0 110512 118622 runble cpubench"
-                },
-                {
-                    "time": 174.82,
-                    "content": "8 0 110711 117746 runble cpubench"
-                },
-                {
-                    "time": 260.61,
-                    "content": ""
-                },
-                {
-                    "time": 260.61,
-                    "content": "1 2 767 782 sleep  init"
-                },
-                {
-                    "time": 260.61,
-                    "content": "2 2 649 670 sleep  sh"
-                },
-                {
-                    "time": 260.61,
-                    "content": "4 0 170515 170562 runble iobench"
-                },
-                {
-                    "time": 260.61,
-                    "content": "6 0 164278 176300 runble cpubench"
-                },
-                {
-                    "time": 260.61,
-                    "content": "8 0 164732 175139 runble cpubench"
-                },
-                {
-                    "time": 260.61,
-                    "content": ""
-                },
-                {
-                    "time": 260.61,
-                    "content": "1 2 767 782 sleep  init"
-                },
-                {
-                    "time": 260.61,
-                    "content": "2 2 649 670 sleep  sh"
-                },
-                {
-                    "time": 260.61,
-                    "content": "4 0 170515 170562 runble iobench"
-                },
-                {
-                    "time": 260.61,
-                    "content": "6 0 164278 176300 runble cpubench"
-                },
-                {
-                    "time": 260.61,
-                    "content": "8 0 164732 175139 runble cpubench"
-                }
-            ],
-            "iobench4": [
-                {
-                    "time": 0.0,
-                    "content": "4: 1191 IOP100000T"
-                },
-                {
-                    "time": 43.5,
-                    "content": "4: 1226 IOP100000T"
-                },
-                {
-                    "time": 87.17,
-                    "content": "4: 1235 IOP100000T"
-                },
-                {
-                    "time": 130.57,
-                    "content": "4: 1216 IOP100000T"
-                },
-                {
-                    "time": 174.82,
-                    "content": "4: 1194 IOP100000T"
-                },
-                {
-                    "time": 217.71,
-                    "content": "4: 1194 IOP100000T"
-                },
-                {
-                    "time": 260.62,
-                    "content": "4: 1237 IOP100000T"
-                }
-            ]
-        }
-    },
-    {
         "command": "cpubench &\n iobench &\n iobench &",
         "output": {
             "other": [
@@ -990,6 +797,199 @@
                 {
                     "time": 221.14,
                     "content": "4: 0 KFLOP100000T"
+                }
+            ]
+        }
+    },
+    {
+        "command": "iobench &\n cpubench &\n cpubench &",
+        "output": {
+            "other": [
+                {
+                    "time": 0.0,
+                    "content": "iobench &"
+                },
+                {
+                    "time": 0.0,
+                    "content": "cpubench &"
+                },
+                {
+                    "time": 0.0,
+                    "content": "cpubench &"
+                },
+                {
+                    "time": 87.16,
+                    "content": ""
+                },
+                {
+                    "time": 87.17,
+                    "content": "1 2 767 782 sleep  init"
+                },
+                {
+                    "time": 87.17,
+                    "content": "2 2 649 670 sleep  sh"
+                },
+                {
+                    "time": 87.17,
+                    "content": "4 0 57210 57228 runble iobench"
+                },
+                {
+                    "time": 87.17,
+                    "content": "6 0 55164 59172 runble cpubench"
+                },
+                {
+                    "time": 87.17,
+                    "content": "8 0 55152 58626 runble cpubench"
+                },
+                {
+                    "time": 87.17,
+                    "content": ""
+                },
+                {
+                    "time": 87.17,
+                    "content": "1 2 767 782 sleep  init"
+                },
+                {
+                    "time": 87.17,
+                    "content": "2 2 649 670 sleep  sh"
+                },
+                {
+                    "time": 87.17,
+                    "content": "4 0 57210 57228 runble iobench"
+                },
+                {
+                    "time": 87.17,
+                    "content": "6 0 55164 59172 runble cpubench"
+                },
+                {
+                    "time": 87.17,
+                    "content": "8 0 55152 58626 runble cpubench"
+                },
+                {
+                    "time": 174.82,
+                    "content": ""
+                },
+                {
+                    "time": 174.82,
+                    "content": "1 2 767 782 sleep  init"
+                },
+                {
+                    "time": 174.82,
+                    "content": "2 2 649 670 sleep  sh"
+                },
+                {
+                    "time": 174.82,
+                    "content": "4 0 114623 114658 runble iobench"
+                },
+                {
+                    "time": 174.82,
+                    "content": "6 0 110512 118622 runble cpubench"
+                },
+                {
+                    "time": 174.82,
+                    "content": "8 0 110711 117746 runble cpubench"
+                },
+                {
+                    "time": 174.82,
+                    "content": ""
+                },
+                {
+                    "time": 174.82,
+                    "content": "1 2 767 782 sleep  init"
+                },
+                {
+                    "time": 174.82,
+                    "content": "2 2 649 670 sleep  sh"
+                },
+                {
+                    "time": 174.82,
+                    "content": "4 0 114623 114658 runble iobench"
+                },
+                {
+                    "time": 174.82,
+                    "content": "6 0 110512 118622 runble cpubench"
+                },
+                {
+                    "time": 174.82,
+                    "content": "8 0 110711 117746 runble cpubench"
+                },
+                {
+                    "time": 260.61,
+                    "content": ""
+                },
+                {
+                    "time": 260.61,
+                    "content": "1 2 767 782 sleep  init"
+                },
+                {
+                    "time": 260.61,
+                    "content": "2 2 649 670 sleep  sh"
+                },
+                {
+                    "time": 260.61,
+                    "content": "4 0 170515 170562 runble iobench"
+                },
+                {
+                    "time": 260.61,
+                    "content": "6 0 164278 176300 runble cpubench"
+                },
+                {
+                    "time": 260.61,
+                    "content": "8 0 164732 175139 runble cpubench"
+                },
+                {
+                    "time": 260.61,
+                    "content": ""
+                },
+                {
+                    "time": 260.61,
+                    "content": "1 2 767 782 sleep  init"
+                },
+                {
+                    "time": 260.61,
+                    "content": "2 2 649 670 sleep  sh"
+                },
+                {
+                    "time": 260.61,
+                    "content": "4 0 170515 170562 runble iobench"
+                },
+                {
+                    "time": 260.61,
+                    "content": "6 0 164278 176300 runble cpubench"
+                },
+                {
+                    "time": 260.61,
+                    "content": "8 0 164732 175139 runble cpubench"
+                }
+            ],
+            "iobench4": [
+                {
+                    "time": 0.0,
+                    "content": "4: 1191 IOP100000T"
+                },
+                {
+                    "time": 43.5,
+                    "content": "4: 1226 IOP100000T"
+                },
+                {
+                    "time": 87.17,
+                    "content": "4: 1235 IOP100000T"
+                },
+                {
+                    "time": 130.57,
+                    "content": "4: 1216 IOP100000T"
+                },
+                {
+                    "time": 174.82,
+                    "content": "4: 1194 IOP100000T"
+                },
+                {
+                    "time": 217.71,
+                    "content": "4: 1194 IOP100000T"
+                },
+                {
+                    "time": 260.62,
+                    "content": "4: 1237 IOP100000T"
                 }
             ]
         }

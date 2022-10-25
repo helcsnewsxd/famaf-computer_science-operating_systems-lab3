@@ -1079,10 +1079,6 @@
             ],
             "iobench8": [
                 {
-                    "time": 10.47,
-                    "content": "8: \t\t\t\t\t6: 357 IOP1000T"
-                },
-                {
                     "time": 20.76,
                     "content": "8: 255 IOP1000T"
                 },
@@ -1103,16 +1099,8 @@
                     "content": "8: 441 IOP1000T"
                 },
                 {
-                    "time": 72.59,
-                    "content": "8: 21\t\t\t\t\t6: 192 IOP1000T"
-                },
-                {
                     "time": 82.94,
                     "content": "8: 382 IOP1000T"
-                },
-                {
-                    "time": 124.41,
-                    "content": "8: 24\t\t\t\t\t6: 369 IOP1000T"
                 },
                 {
                     "time": 145.17,
@@ -1121,10 +1109,6 @@
                 {
                     "time": 165.92,
                     "content": "8: 422 IOP1000T"
-                },
-                {
-                    "time": 176.31,
-                    "content": "8: 30\t\t\t\t\t6: 354 IOP1000T"
                 },
                 {
                     "time": 188.82,
@@ -1159,12 +1143,6 @@
                     "content": "8: 197 IOP1000T"
                 }
             ],
-            "iobench359 IOP1000T": [
-                {
-                    "time": 10.83,
-                    "content": "359 IOP1000T"
-                }
-            ],
             "iobench6": [
                 {
                     "time": 20.81,
@@ -1191,24 +1169,8 @@
                     "content": "6: 400 IOP1000T"
                 },
                 {
-                    "time": 93.32,
-                    "content": "6: 28\t\t\t\t\t8: 205 IOP1000T"
-                },
-                {
-                    "time": 103.65,
-                    "content": "6: 27\t\t\t\t\t8: 335 IOP1000T"
-                },
-                {
-                    "time": 113.99,
-                    "content": "6: 34\t\t\t\t\t8: 349 IOP1000T"
-                },
-                {
                     "time": 134.76,
                     "content": "6: 437 IOP1000T"
-                },
-                {
-                    "time": 155.48,
-                    "content": "6: \t\t\t\t\t8: 312 IOP1000T"
                 },
                 {
                     "time": 155.52,
@@ -1217,14 +1179,6 @@
                 {
                     "time": 186.62,
                     "content": "6: 420 IOP1000T"
-                },
-                {
-                    "time": 197.01,
-                    "content": "6: 27\t\t\t\t\t8: 250 IOP1000T"
-                },
-                {
-                    "time": 207.37,
-                    "content": "6: 27\t\t\t\t\t8: 333 IOP1000T"
                 },
                 {
                     "time": 217.71,
@@ -1257,54 +1211,6 @@
                 {
                     "time": 293.86,
                     "content": "6: 254 IOP1000T"
-                }
-            ],
-            "iobench4 IOP1000T": [
-                {
-                    "time": 78.8,
-                    "content": "4 IOP1000T"
-                }
-            ],
-            "iobench3 IOP1000T": [
-                {
-                    "time": 101.27,
-                    "content": "3 IOP1000T"
-                }
-            ],
-            "iobench9 IOP1000T": [
-                {
-                    "time": 112.73,
-                    "content": "9 IOP1000T"
-                },
-                {
-                    "time": 123.73,
-                    "content": "9 IOP1000T"
-                },
-                {
-                    "time": 200.25,
-                    "content": "9 IOP1000T"
-                }
-            ],
-            "iobench7 IOP1000T": [
-                {
-                    "time": 134.1,
-                    "content": "7 IOP1000T"
-                },
-                {
-                    "time": 211.77,
-                    "content": "7 IOP1000T"
-                }
-            ],
-            "iobench229 IOP1000T": [
-                {
-                    "time": 155.5,
-                    "content": "229 IOP1000T"
-                }
-            ],
-            "iobench5 IOP1000T": [
-                {
-                    "time": 178.14,
-                    "content": "5 IOP1000T"
                 }
             ]
         }
@@ -1653,16 +1559,8 @@
         "output": {
             "iobench10": [
                 {
-                    "time": 0.0,
-                    "content": "10:\t\t\t\t\t4: 251 IOP1000T"
-                },
-                {
                     "time": 21.82,
                     "content": "10: 106 IOP1000T"
-                },
-                {
-                    "time": 43.55,
-                    "content": "10: 1\t\t\t\t\t4: 183 IOP1000T"
                 },
                 {
                     "time": 54.5,
@@ -1701,18 +1599,6 @@
                     "content": "10: 156 IOP1000T"
                 },
                 {
-                    "time": 206.78,
-                    "content": "10: 1\t\t\t\t\t4: 81 IOP1000T"
-                },
-                {
-                    "time": 227.27,
-                    "content": "10: 1\t\t\t\t\t4: 153 IOP1000T"
-                },
-                {
-                    "time": 239.29,
-                    "content": "10: 1\t\t\t\t\t4: 107 IOP1000T"
-                },
-                {
                     "time": 250.12,
                     "content": "10: 93 IOP1000T"
                 },
@@ -1731,12 +1617,6 @@
                 {
                     "time": 299.6,
                     "content": "10: 179 IOP1000T"
-                }
-            ],
-            "iobench126 IOP1000T": [
-                {
-                    "time": 10.23,
-                    "content": "126 IOP1000T"
                 }
             ],
             "cpubench6": [
@@ -1973,16 +1853,8 @@
                     "content": "4: 143 IOP1000T"
                 },
                 {
-                    "time": 32.73,
-                    "content": "4: 1\t\t\t\t\t10: 141 IOP1000T"
-                },
-                {
                     "time": 59.04,
                     "content": "4: 175 IOP1000T"
-                },
-                {
-                    "time": 72.27,
-                    "content": "4: 10\t\t\t\t\t10: 93 IOP1000T"
                 },
                 {
                     "time": 82.61,
@@ -2007,14 +1879,6 @@
                 {
                     "time": 137.14,
                     "content": "4: 150 IOP1000T"
-                },
-                {
-                    "time": 152.28,
-                    "content": "4: 10\t\t\t\t\t10: 81 IOP1000T"
-                },
-                {
-                    "time": 163.22,
-                    "content": "4: 26\t\t\t\t\t10: 158 IOP1000T"
                 },
                 {
                     "time": 174.21,
@@ -2043,50 +1907,6 @@
                 {
                     "time": 293.57,
                     "content": "4: 171 IOP1000T"
-                }
-            ],
-            "iobench57 IOP1000T": [
-                {
-                    "time": 35.79,
-                    "content": "57 IOP1000T"
-                }
-            ],
-            "iobench22 IOP1000T": [
-                {
-                    "time": 46.21,
-                    "content": "22 IOP1000T"
-                }
-            ],
-            "iobench7 IOP1000T": [
-                {
-                    "time": 72.72,
-                    "content": "7 IOP1000T"
-                },
-                {
-                    "time": 152.86,
-                    "content": "7 IOP1000T"
-                }
-            ],
-            "iobench4 IOP1000T": [
-                {
-                    "time": 164.98,
-                    "content": "4 IOP1000T"
-                }
-            ],
-            "iobench07 IOP1000T": [
-                {
-                    "time": 215.54,
-                    "content": "07 IOP1000T"
-                },
-                {
-                    "time": 239.95,
-                    "content": "07 IOP1000T"
-                }
-            ],
-            "iobench53 IOP1000T": [
-                {
-                    "time": 228.08,
-                    "content": "53 IOP1000T"
                 }
             ]
         }
