@@ -314,20 +314,20 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 
 Aclaración: La escala de los gráficos es logarítmica ya que en escala lineal hay gran cantidad de datos que son imposibles de verlos hasta usando una lupa.
 
-![](figures/graphs/iobench_i512400f_RRvsMLFQ.png)
+![](Figures/Graphs/iobench_i512400f_RRvsMLFQ.png)
 
 _Comparación entre el desempeño de los procesos IO-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
 
-![](figures/graphs/iobench_celeronn4000_RRvsMLFQ.png)
+![](Figures/Graphs/iobench_celeronn4000_RRvsMLFQ.png)
 
 _Comparación entre el desempeño de los procesos IO-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
 
 
-![](figures/graphs/cpubench_i512400f_RRvsMLFQ.png)
+![](Figures/Graphs/cpubench_i512400f_RRvsMLFQ.png)
 
 _Comparación entre el desempeño de los procesos CPU-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
 
-![](figures/graphs/cpubench_celeronn4000_RRvsMLFQ.png)
+![](Figures/Graphs/cpubench_celeronn4000_RRvsMLFQ.png)
 
 _Comparación entre el desempeño de los procesos CPU-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
 
