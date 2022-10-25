@@ -474,7 +474,17 @@ Se creo como herramienta para ayudar en el desarrollo del informe.
 # Desarrollo del proyecto
 
 ## *Problemas*
-[AGREGAR]
+### Mandar ctrl-p a xv6 usando el script en python
+#### Problema
+No habia niguna interfaz que permitiese mandar una combinacion de teclas al subproceso (qemu).
+Tambien se desconocia que es lo que pasa exactamente cuanto se presiona una combinacion de teclas como `ctrl-p`.
+
+#### Solucion
+Para ello hizo falta investigar que es lo que pasa de fondo cuando apretamos una combinacion de teclas.
+
+En el caso de `ctrl-p`, se envia el caracter ASCII numero 16 (Data Link Escape), el cual es un caractér de control.
+
+Por ende, para solucionar el problema bastó con enviar el caracter ASCII numero 16 por STDIN a xv6.
 
 ## *Comunicación*
 La comunicación se basó fuertemente en plataformas como [Discord](https://discord.com/), donde la comunicación es más organizada y se pueden hacer llamadas de voz, y [Telegram](https://telegram.org/), donde conseguimos una comunicación más veloz e informal. 
