@@ -169,7 +169,14 @@ Un ejemplo es la ejecución de dos procesos en paralelo (`iobench & ; cpubench &
 Tal y como se mostró en las respuestas a las preguntas anteriores, más específicamente a la primera, el quantum es asignado mediante un timer interrupt al SO de forma global, no de forma particular a cada proceso. Motivo de esto, puede suceder que un proceso termine antes de la finalización del quantum, por lo que el siguiente elegido por el scheduler va a tener un tiempo menor asignado (el faltante) ya que comienza con el tiempo ya transcurrido.
 
 ## Segunda Parte
-En esta segunda parte del laboratorio, nos centramos en cuantificar el rendimiento del planificador con respecto a procesos CPU-bound e IO-bound. Realizamos mediciones y comparaciones entre el planificador por default en xv6, y el implementado (MLFQ). Las mediciones y sus conlusiones se pueden leer en el siguiente apartado: [**Mediciones**](Analisis_mediciones.md)
+En esta segunda parte del laboratorio, nos centramos en cuantificar el rendimiento del planificador con respecto a procesos CPU-bound e IO-bound. Realizamos mediciones y comparaciones entre el planificador por default en xv6, y el implementado (MLFQ). Las conclusiones generales producto de los experimentos fueron las siguientes:
+
+- Un quantum mayor significa mejor desempeño para los procesos CPU-bond y un quantum más chico mejora el desempeño de los procesos IO-bond (siempre y cuando el quantum no sea demasiado chico).
+- Un quantum demasiado chico no ayuda a ningún tipo de proceso, perjudica a todos y obliga al SO a realizar demasiados context switch.
+- El quantum por defecto en XV6 es demasiado grande y por lo tanto perjudica a los procesos IO-bond. El quantum ideal (desde nuestro punto de vista) seria el utilizado en el **escenario 1** (100000)
+- La mayor diferencia de rendimiento entre el procesador MLFQ y RR se presenta cuando aumentamos la cantidad de procesos que el SO debe planificar.
+
+Las mediciones y sus conclusiones detalladas se pueden leer en el siguiente apartado: [**Mediciones**](Analisis_mediciones.md)
 
 ## Tercera Parte
 Aquí se comenzó a repensar el planificador de xv6 para que su funcionamiento se dicte por una ejecución prioritaria de los procesos, es decir, implementando un planificador MLFQ. Previo a esta implementación, en esta parte se introdujeron algunas variables y campos necesarios para su correcto funcionamiento.
@@ -450,7 +457,7 @@ Se creo como herramienta para ayudar en el desarrollo del informe.
 
 ## *Material teórico de estudio y preparación*
 
- - [**Operating Systems: Three Easy Pieces**: Process virtualization](https://pages.cs.wisc.edu/~remzi/OSTEP/), principalmente el capítulo número 5 (*Process API*) y los capitulos de la sección de Concurrencia, sobre todo el capítulo número 31 (*Semaphores*), junto con las secciones de *Homework Simulation* y *Homework Code* de cada uno de esos capitulos.
+ - [**Operating Systems: Three Easy Pieces**: Process virtualization](https://pages.cs.wisc.edu/~remzi/OSTEP/), principalmente los capitulos "7 - CPU Scheduling" y "8 - Multi-level Feedback"
  - [**Documentación de XV6**](https://course.ccs.neu.edu/cs3650/unix-xv6/index.html)
  - [**Repositorio XV6**](https://github.com/mit-pdos/xv6-book) 
 
@@ -498,7 +505,7 @@ La comunicación se basó fuertemente en plataformas como [Discord](https://disc
 
 ## *Workflow de desarrollo*
 ### *Branches*
-Nuestro workflow se apoyó fuertemente en el uso de branchs dentro del repositorio de bitbucket. Para cada parte del proyecto, primero se creaba una nueva branch para desarrollarlo y cuando ya estaba completado, era fusionado a la rama principal
+Nuestro workflow se apoyó fuertemente en el uso de branchs dentro del repositorio de bitbucket. Para cada parte del proyecto, primero se creaba una nueva branch para desarrollarlo y cuando ya estaba completado, era fusionado a la rama principal. Nos separamos en grupos de trabajo para cada uno enfocarnos en una sola cosa, y luego al terminar la actividad se comparte los resultados y el razonamiento que hay detras con los demas integrantes del grupo.
 
 # Conclusiones
 Este trabajo nos ayudó a entender de forma directa y real, el papel importante que toma un planificador de recursos y sus demás componentes en el funcionamiento del sistema operativo. 
