@@ -17,9 +17,11 @@ Para los procesos CPU-bound mediremos cuantas "1024 operaciones de punto flotant
 Vamos a ejecutar diferentes casos en diferentes escenarios donde mediremos los datos de los procesos IO-bound y los procesos CPU-bound.
 Las mediciones se realizarán (aproximadamente) cada 100 (MINTICKS=100) ticks de reloj, para cada proceso en ejecución durante el caso. 
 Todos los casos en los distintos escenarios se ejecutan durante 5 minutos en dos equipos, para analizar si se ve un mayor cambio en un procesador potente o en uno de menores recursos. Los equipos cuentan con las siguientes caracteristicas: 
+
 - i5 12400f y 16GB de RAM / Celeron N4000 y 4GB de RAM
 - Desconectado de internet
 - Cantidad mínima de procesos en ejecución en el sistema, además de QEMU y otros procesos necesarios para realizar el experimento
+
 En cada caso, las mediciones de cada proceso se promediaran para luego analizarse.
 
 
@@ -312,7 +314,7 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 
 ## Análisis y gráficos de interes
 
-Aclaración: La escala de los gráficos es logarítmica ya que en escala lineal hay gran cantidad de datos que son imposibles de verlos hasta usando una lupa.
+_**Aclaración**: La escala de los gráficos es logarítmica ya que en escala lineal hay gran cantidad de datos que son imposibles de verlos hasta con una lupa_
 
 ![](Figures/Graphs/iobench_i512400f_RRvsMLFQ.png)
 
@@ -320,7 +322,7 @@ _Comparación entre el desempeño de los procesos IO-bond en el planificador MLF
 
 ![](Figures/Graphs/iobench_celeronn4000_RRvsMLFQ.png)
 
-_Comparación entre el desempeño de los procesos IO-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
+_Comparación entre el desempeño de los procesos IO-bond en el planificador MLFQ y el planificador RR en el procesador Celeron N4000_
 
 
 ![](Figures/Graphs/cpubench_i512400f_RRvsMLFQ.png)
@@ -329,7 +331,7 @@ _Comparación entre el desempeño de los procesos CPU-bond en el planificador ML
 
 ![](Figures/Graphs/cpubench_celeronn4000_RRvsMLFQ.png)
 
-_Comparación entre el desempeño de los procesos CPU-bond en el planificador MLFQ y el planificador RR en el procesador i5 12400f_
+_Comparación entre el desempeño de los procesos CPU-bond en el planificador MLFQ y el planificador RR en el procesador Celeron N4000_
 
 
 ### Análisis de los diferentes tamaños de quantums
@@ -348,13 +350,13 @@ _Comparación entre el desempeño de los procesos CPU-bond en el planificador ML
 
 - Si tuvieramos que seleccionar nuestro quantum ideal para RR, según los experimentos realizados elegiriamos el quantum del **escenario 1**, porque es el más equilibrado según observamos. Beneficia más a los procesos IO-bond que el **escenario 0** y un escenario con quantum más corto reduciría mucho la cantidad de operaciones de los procesos CPU-bond, sobre todo en los procesadores menos potentes (Como el celeron N4000)
 
-- Si tuvieramos que seleccionar nuestro quantum ideal para MLFQ sin priority boost, según los experimentos realizados elegiriamos el quantum del **escenario 1**, porque es el más equilibrado según observamos. Beneficia más a los procesos IO-bond que el **escenario 0**, los cuales ya por el planificador MLFQ se ven bastante más beneficiados que en RR, y un escenario con quantum más corto reduciría mucho la cantidad de operaciones de los procesos CPU-bond, sobre todo en los procesadores menos potentes (Como el celeron N4000)
+- Si tuvieramos que seleccionar nuestro quantum ideal para MLFQ sin priority boost, según los experimentos realizados elegiriamos el quantum del **escenario 1**, porque es el más equilibrado según observamos. Beneficia más a los procesos IO-bond (los cuales ya por el planificador MLFQ se ven bastante más beneficiados que en RR) que el **escenario 0**, y un escenario con quantum más corto reduciría mucho la cantidad de operaciones de los procesos CPU-bond, sobre todo en los procesadores menos potentes (Como el celeron N4000)
 
 ### Análisis del desempeño de los procesos al realizar time-sharing
 
 - El funcionamiento del **caso 2** ya fue explicado en la sección anterior
 
-- En el **caso 3** se observa que al ejecutar 2 procesos IO-bond en paralelo, el desempeño de cada proceso es similar a si cada proceso se ejecutara solo en el CPU. Esto se debe a que al hacer las peticiones de IO se van turnando los procesos, y el tiempo que un proceso espera el otro lo aprovecha para realizar cosas en el CPU. El desempeño de este caso no depende casi nada del CPU, ya que las pruebas hechas con el i5 y con el intel Celeron dan resultados bastante similares.
+- En el **caso 3** se observa que al ejecutar 2 procesos IO-bond en paralelo, el desempeño de cada proceso es similar a si cada proceso se ejecutara solo en el CPU. Esto se debe a que al hacer las peticiones de IO se van turnando los procesos, y el tiempo que un proceso espera el otro lo aprovecha para realizar cosas en el CPU, aunque cabe aclarar que el desempeño de este caso no depende casi nada del CPU, ya que las pruebas hechas con el i5 y con el intel Celeron dan resultados bastante similares.
 
 - En el **caso 4** se observa que al ejecutar 2 procesos CPU-bound en paralelo, el desempeño de cada proceso baja a la mitad (Respecto al desempeño al ejecutarse un solo proceso individual, en el **caso 1**).
 
@@ -366,16 +368,16 @@ _Comparación entre el desempeño de los procesos CPU-bond en el planificador ML
 
 - Para los análisis anteriores se usaron sobre todo los **escenarios 0, 1 y 2**, ya que el **escenario 3** al tener un quantum tan pequeño genera ciertas mediciones extrañas, además de que luego de todas las mediciones no consideramos que sea viable querer utilizar XV6 con un planificador que tenga el quantum así de pequeño.
 
-- Para los análisis anteriores nos basamos sobre todo en las mediciones del procesador i5 12400f en aquellas situaciones donde existia una gran diferencia entre los resultados dados por las mediciones de los procesadores.
+- Para los análisis anteriores nos basamos sobre todo en las mediciones del procesador i5 12400f en aquellas situaciones donde existia una gran diferencia (salvando la escala) entre los resultados dados por las mediciones de ambos procesadores.
 
 
 ### Comparación MLFQ vs RR
 - En los casos básicos (**casos 0, 1, 2, 3 y 4**) no se ve gran diferencia entre los resultados de los planificadores MLFQ y RR.
 - En los casos opcionales (**casos 5, 6 y 7**) si se ve una mayor diferencia, aunque tampoco es muy grande. En esos casos opcionales se ve que los procesos IO-bond tienen una mejor respuesta y desempeño sin que los procesos CPU-bond se vean muy perjudicados, mostrando que el SO los ejecuta mayor cantidad de veces, priorizandolos frente a los procesos CPU-bond y generando un contraste con el planificador RR. Eso puede significar que la mayor diferencia de desempeño entre el planificador MLFQ y RR se presenta al trabajar con una gran cantidad de procesos, como sucede en el día a día de un SO. La mayor parte de nuestras mediciones hechas en los casos de prueba fueron con poca cantidad y eso puede haber propiciado que no exista tanta diferencia entre las mediciones.
-- La estructura de las mediciones en ambos equipos es bastante similar, y en ambas se ve reflejado como los procesos IO-bond se benefician de la implementación del planificador MLFQ.
+- La estructura, forma y simetria de los datos en ambos equipos es bastante similar, y en ambas se ve reflejado como los procesos IO-bond se benefician de la implementación del planificador MLFQ.
 
 
-# Conclusiones
+# Conclusiones finales
 - Se corrobora la hipótesis de que un quantum mayor significa mejor desempeño para los procesos CPU-bond y un quantum más chico mejora el desempeño de los procesos IO-bond (siempre y cuando el quantum no sea demasiado chico).
 - Un quantum demasiado chico no ayuda a ningún tipo de proceso, perjudica a todos y obliga al SO a realizar demasiados context switch.
 - El quantum por defecto en XV6 es demasiado grande y por lo tanto perjudica a los procesos IO-bond. El quantum ideal (desde nuestro punto de vista) seria el utilizado en el **escenario 1**
