@@ -1,16 +1,19 @@
-# Problema
+[TOC]
+
+# Estructura del análisis
+## Problema
 Comparar el desempeño de los planificadores Round Robin (por defecto en XV6) y MLFQ (implementado por nosotros), utilizando procesos CPU-bound e IO-bound en XV6 y contrastando también los diferentes tamaños de quantum en cada caso.
 
-# Hipótesis
+## Hipótesis
 El planificador MLFQ mejorará el desempeño en los procesos IO-bound y empeorará un poquito el desempeño de los procesos CPU-bound.
 En general en los casos, mientras menor sea el quantum, mejor desempeño tendrán los procesos IO-bound y peor desempeño los procesos CPU-bound. 
 
-# Datos
+## Datos
 Para responder a nuestras hipótesis, mediremos diferentes datos para los procesos IO-bound y los procesos CPU-bound.
 Para los procesos IO-bound mediremos cuantas operaciones IO se realizaron (en promedio) durante un lapso de 100 (MINTICKS=100) ticks de reloj.
 Para los procesos CPU-bound mediremos cuantas "1024 operaciones de punto flotante" (KFLOP) se realizaron (en promedio) durante un lapso de 100 (MINTICKS=100) ticks de reloj.
 
-# Experimento
+## Experimento
 Vamos a ejecutar diferentes casos en diferentes escenarios donde mediremos los datos de los procesos IO-bound y los procesos CPU-bound.
 Las mediciones se realizarán (aproximadamente) cada 100 (MINTICKS=100) ticks de reloj, para cada proceso en ejecución durante el caso. 
 Todos los casos en los distintos escenarios se ejecutan durante 5 minutos en dos equipos, para analizar si se ve un mayor cambio en un procesador potente o en uno de menores recursos. Los equipos cuentan con las siguientes caracteristicas: 
@@ -20,7 +23,7 @@ Todos los casos en los distintos escenarios se ejecutan durante 5 minutos en dos
 En cada caso, las mediciones de cada proceso se promediaran para luego analizarse.
 
 
-## Casos
+### Casos
 - **Caso 0**: 1 iobench solo. En este caso queremos investigar como se comporta un solo proceso iobench corriendo solo (sin otros procesos en paralelo) en xv6.
 - **Caso 1**: 1 cpubench solo. En este caso queremos investigar como se comporta un solo proceso cpubench corriendo solo (sin otros procesos en paralelo) en xv6. 
 - **Caso 2**: 1 iobench con 1 cpubench. En este caso queremos investigar como se comporta un solo proceso iobench corriendo cuando además esta corriendo otro poceso cpubench en paralelo en xv6. (En este mismo Caso podemos ver como se comporta 1 cpubench cuando en paralelo corre 1 iobench)
@@ -30,15 +33,15 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 - **\*Caso 6**: 1 iobench con 2 cpubench. En este caso queremos investigar como se comporta un solo proceso iobench corriendo cuando además estan corriendo otros 2 pocesos cpubench en paralelo en xv6. (En este mismo Caso podemos ver como se comporta 1 cpubench cuando en paralelo corren 1 iobench y otro cpubench)
 - **\*Caso 7**: 1 iobench con 2 cpubench y 1 iobench. En este caso queremos investigar como se comporta un solo proceso iobench corriendo cuando además estan corriendo otros 2 pocesos cpubench y otro proceso iobench en paralelo en xv6. (Con este mismo Caso podemos ver como se comporta 1 cpubench cuando en paralelo corren 2 iobench y otro cpubench)
 
-##  Escenarios
+###  Escenarios
 - **Escenario 0**: quantum por defecto 
 - **Escenario 1**: quantum 10 veces más corto (Para mantener un comportamiento similar en las mediciones, el valor de MINTICKS es 10 veces más largo)
 - **Escenario 2**: quantum 100 veces más corto (Para mantener un comportamiento similar en las mediciones, el valor de MINTICKS es 100 veces más largo)
 - **Escenario 3**: quantum 1000 veces más corto (Para mantener un comportamiento similar en las mediciones, el valor de MINTICKS es 1000 veces más largo)
 
-# Resultados RR (Planificador original) 
+# Resultados del experimento 
 
-## Mediciones (i5 12400f)
+## Mediciones RR (i5 12400f)
 
 ### Caso 0: 1 iobench solo
 
@@ -105,9 +108,7 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 
 *La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición (Nuestra hipótesis es que el proceso en cuestión sufrió de starvation por culpa de las llamadas a IO)
 
-# Resultados MLFQ sin priority boost (Planificador nuevo) 
-
-## Mediciones (i5 12400f)
+## Mediciones MLFQ sin priority boost (i5 12400f)
 
 ### Caso 0: 1 iobench solo
 
@@ -174,14 +175,22 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 
 *La simbología "-" significa que no fueron registrados datos de ese proceso durante el periodo de tiempo que duro la medición (Nuestra hipótesis es que el proceso en cuestión sufrió de starvation por culpa de las llamadas a IO)
 
-## Conclusiones y gráficos de interes
 
-![](graphs/iobench-i512400f-RR.png)
-![](graphs/iobench-i512400f-MLFQ.png)
-![](graphs/cpubench-i512400f-RR.png)
-![](graphs/cpubench-i512400f-MLFQ.png)
 
-### Diferentes tamaños de quantums
+## Análisis y gráficos de interes
+
+
+![](graphs/iobench_RRvsMLFQ.png)
+
+_Comparación entre el desempeño de los procesos IO-bond en el planificador MLFQ y el planificador RR_
+
+![](graphs/cpubench_RRvsMLFQ.png)
+
+_Comparación entre el desempeño de los procesos CPU-bond en el planificador MLFQ y el planificador RR_
+
+
+
+### Análisis de los diferentes tamaños de quantums
 
 - En el **caso 0** se observa que el mejor escenario para los proceso IO-bond es el **escenario 1**, teniendo resultados ligeramente mejores que los de los **escenarios 0 y 2**. El **escenario 3** da el peor desempeño, debido a lo corto de su quantum, que lo vuelve inviable.
 
@@ -196,7 +205,7 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 - Todas las conclusiones anteriores aplican tanto para el planificador RR como para el MLFQ sin priority boost, ya que los resultados entre ambos planificadores no tienen grandes variaciones.
 
 
-### Desempeño de los procesos al realizar time-sharing
+### Análisis del desempeño de los procesos al realizar time-sharing
 
 - El funcionamiento del **caso 2** ya fue explicado en la sección anterior
 
@@ -218,5 +227,9 @@ En cada caso, las mediciones de cada proceso se promediaran para luego analizars
 - En los casos opcionales (**casos 5, 6 y 7**) si se ve una mayor diferencia, aunque tampoco es muy grande. En esos casos opcionales se ve que los procesos IO-bond tienen una mejor respuesta y desempeño sin que los procesos CPU-bond se vean muy perjudicados, mostrando que el SO los ejecuta mayor cantidad de veces, priorizandolos frente a los procesos CPU-bond y generando un contraste con el planificador RR.
 
 
-# Resumen de los resultados
-- 
+## Conclusiones
+- a
+- a
+- a
+- a
+- a

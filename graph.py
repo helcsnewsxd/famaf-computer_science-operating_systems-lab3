@@ -42,16 +42,16 @@ NAMES = [
 
 def draw_bar_plot(groups, data, start=0, color=None, label=""):
     bar = plt.barh(groups, data, left=start, height=0.15, color=color, label=label)
-    plt.bar_label(bar, label_type="center", annotation_clip=True)
-
+    plt.bar_label(bar, label_type="edge", annotation_clip=True, fontsize=6)
 
 def change_plot_visuals():
     handles = [
         mpatches.Patch(color=color, label=label) for color, label in zip(COLORS, LABELS)
     ]
-    plt.legend(handles=handles)
+    plt.legend(handles=handles, fontsize=6)
     plt.xscale("log")
     plt.grid()
+
 
 
 def show_graph():
@@ -61,8 +61,10 @@ def show_graph():
 
 
 def save_fig_to_path(path):
+
     change_plot_visuals()
-    plt.savefig(path, dpi=800, bbox_inches="tight")
+    plt.xlim([None, 1000000])
+    plt.savefig(path, dpi=400, bbox_inches="tight")
     plt.close()
 
 
